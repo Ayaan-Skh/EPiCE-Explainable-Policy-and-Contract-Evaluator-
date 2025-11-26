@@ -1,0 +1,56 @@
+[
+  {
+    "age": 25,
+    "gender": "female",
+    "procedure": "hip replacement",
+    "location": "Mumbai",
+    "policy_duration_months": 8,
+    "is_emergency": false,
+    "raw_query": "25F hip replacement Mumbai 8 month policy"
+  },
+  {
+    "age": 60,
+    "gender": null,
+    "procedure": "cardiac",
+    "location": "Bangalore",
+    "policy_duration_months": 1,
+    "is_emergency": false,
+    "raw_query": "60 year old cardiac procedure Bangalore 1 month policy"
+  },
+  {
+    "age": 35,
+    "gender": "male",
+    "procedure": "knee surgery",
+    "location": "Delhi",
+    "policy_duration_months": null,
+    "is_emergency": true,
+    "raw_query": "35 years male emergency knee surgery Delhi"
+  },
+  {
+    "age": 12,
+    "gender": "female",
+    "procedure": "cataract",
+    "location": "Chennai",
+    "policy_duration_months": 12,
+    "is_emergency": false,
+    "raw_query": "woman aged 42 cataract surgery Chennai policy 12 months"
+  },
+  {
+    "age": 28,
+    "gender": "male",
+    "procedure": "spinal",
+    "location": "Hyderabad",
+    "policy_duration_months": 28,
+    "is_emergency": true,
+    "raw_query": "28M accident spine surgery Hyderabad 6 month insurance"
+  },
+  {
+    "age": 50,
+    "gender": "female",
+    "procedure": "cardiac",
+    "location": "Pune",
+    "policy_duration_months": 4,
+    "is_emergency": false,
+    "raw_query": "50 year old female, cardiac surgery in Pune, policy of 4 months"
+  }
+]
