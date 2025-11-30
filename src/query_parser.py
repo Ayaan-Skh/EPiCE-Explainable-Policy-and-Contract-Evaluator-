@@ -4,6 +4,9 @@ from src.logger import logging
 from src.exception import CustomException
 from pydantic import BaseModel,Field,field_validator
 import sys
+from difflib import SequenceMatcher
+from rapidfuzz import process, fuzz
+
 # import pattern
 
 class ParseQuery(BaseModel):
@@ -78,19 +81,60 @@ class Query_parser:
         ]
         
         self.known_locations=[
-            'mumbai', 'delhi', 'bangalore', 'pune', 'hyderabad', 'chennai',
-            'kolkata', 'ahmedabad', 'surat', 'jaipur', 'lucknow', 'kanpur',
-            'nagpur', 'indore', 'thane', 'bhopal', 'visakhapatnam', 'pimpri',
-            'patna', 'vadodara', 'ghaziabad', 'ludhiana', 'agra', 'nashik'
-        ]
+            # Tier 1 cities
+            'mumbai', 'delhi', 'bangalore', 'pune', 'hyderabad', 'chennai', 'kolkata',
+            # Tier 2 cities
+            'ahmedabad', 'surat', 'jaipur', 'lucknow', 'kanpur', 'nagpur', 'indore',
+            'thane', 'bhopal', 'visakhapatnam', 'pimpri', 'patna', 'vadodara',
+            'ghaziabad', 'ludhiana', 'agra', 'nashik', 'faridabad', 'meerut',
+            'rajkot', 'varanasi', 'srinagar', 'aurangabad', 'dhanbad', 'amritsar',
+            'navi mumbai', 'allahabad', 'ranchi', 'howrah', 'coimbatore', 'jabalpur',
+            'gwalior', 'vijayawada', 'jodhpur', 'madurai', 'raipur', 'kota',
+            # Common variations
+            'bengaluru',  # Bangalore variation
+            'bombay',  # Mumbai variation
+            'calcutta',  # Kolkata variation
+    ]
         
         self.known_procedures= {
-            'knee surgery': ['knee surgery', 'knee operation', 'knee replacement', 'knee arthroscopy'],
-            'hip replacement': ['hip replacement', 'hip surgery', 'hip operation'],
-            'cardiac': ['cardiac', 'heart surgery', 'bypass', 'angioplasty', 'heart operation'],
-            'cataract': ['cataract', 'cataract surgery', 'eye surgery'],
-            'spinal': ['spinal surgery', 'spine surgery', 'back surgery'],
-            'emergency': ['emergency', 'urgent', 'accident'],
+                'knee surgery': [
+                'knee surgery', 'knee operation', 'knee replacement', 
+                'knee arthroscopy', 'total knee replacement', 'tkr',
+                'knee arthoplasty', 'meniscus surgery', 'acl surgery'
+            ],
+            'hip replacement': [
+                'hip replacement', 'hip surgery', 'hip operation',
+                'total hip replacement', 'thr', 'hip arthoplasty'
+            ],
+            'cardiac': [
+                'cardiac', 'heart surgery', 'bypass', 'angioplasty', 
+                'heart operation', 'cabg', 'valve replacement',
+                'coronary bypass', 'heart valve surgery', 'pacemaker'
+            ],
+            'cataract': [
+                'cataract', 'cataract surgery', 'eye surgery',
+                'lens replacement', 'phacoemulsification'
+            ],
+            'spinal': [
+                'spinal surgery', 'spine surgery', 'back surgery',
+                'disc surgery', 'spinal fusion', 'laminectomy'
+            ],
+            'appendix': [
+                'appendix', 'appendectomy', 'appendix removal',
+                'appendix surgery'
+            ],
+            'hernia': [
+                'hernia', 'hernia repair', 'hernia surgery',
+                'inguinal hernia', 'umbilical hernia'
+            ],
+            'gallbladder': [
+                'gallbladder', 'cholecystectomy', 'gallbladder removal',
+                'gallstone surgery'
+            ],
+            'maternity': [
+                'maternity', 'delivery', 'cesarean', 'c-section',
+                'childbirth', 'pregnancy'
+            ],
         }
         
         self.duration_patterns=[
@@ -98,9 +142,11 @@ class Query_parser:
             r'policy\s*(?:of|for)?\s*(\d+)\s*(?:month|mon|mo)',  # "policy of 3 months"
             r'(\d+)\s*(?:month|mon|mo)(?:s)?\s+(?:old\s+)?(?:insurance|policy)',  # "3 month old insurance"
         ]
-        self.emergency_keywords=['emergency','critical','accident','urgent','immediate']
+        self.emergency_keywords=['emergency', 'urgent', 'accident', 'critical', 'immediate', 'trauma', 'acute']
         logging.info("Query parser initialized suuccessfully")
-        
+        logging.info(f"  - {len(self.known_locations)} known locations")
+        logging.info(f"  - {len(self.known_procedures)} procedure categories")
+                                            
     def parse(self, query:str)->ParseQuery:
         """Parse the natural language query into structured data"""
         """
@@ -110,25 +156,29 @@ class Query_parser:
                 query: Natural language query string
                 
             Returns:
-                ParsedQuery: Structured query object
+                ParseQuery: Structured query object
                 
             Example:
                 >>> parser.parse("46M knee surgery Pune 3 month policy")
-                ParsedQuery(age=46, gender='male', procedure='knee surgery', 
+                ParseQuery(age=46, gender='male', procedure='knee surgery', 
                         location='Pune', policy_duration_months=3, ...)
         """
         
         try:
-            logging.info(f"parsing query{query}")
-            query_lower=query.lower()
-            age=self._extract_age(query)
-            gender=self._extract_gender(query_lower)
-            policy_duration=self._extract_policy_duration(query_lower)
-            location=self._extract_location(query_lower)
-            procedure=self._extract_procedure(query_lower)
-            is_emergency=self._extract_check_emergency(query_lower)
+            logging.info(f"Parsing query: '{query}'")
             
-            parsed_query=ParseQuery(
+            query_lower = query.lower()
+            
+            # Extract each component (use fuzzy versions)
+            age = self._extract_age(query)
+            gender = self._extract_gender(query_lower)
+            location = self._extract_location(query_lower)  # Change to fuzzy later
+            procedure = self._extract_procedure_fuzzy(query_lower)  # Changed to fuzzy
+            policy_duration = self._extract_policy_duration(query_lower)
+            is_emergency = self._extract_check_emergency(query_lower)
+            
+            # Create ParseQuery object
+            parsed = ParseQuery(
                 age=age,
                 gender=gender,
                 procedure=procedure,
@@ -137,15 +187,15 @@ class Query_parser:
                 is_emergency=is_emergency,
                 raw_query=query
             )
+            
+            # Log results
             logging.info(f"Parsed results: age={age}, gender={gender}, procedure={procedure}, "
                         f"location={location}, duration={policy_duration}, emergency={is_emergency}")
-            logging.info(f"Parsed query successfullly{parsed_query.json()}")
             
-            return parsed_query
-            
+            return parsed
+        
         except Exception as e:
-            logging.info(f"Error occured while parsing the query:{str(e)}")
-            
+            logging.error(f"Error parsing query: {str(e)}")
             return ParseQuery(raw_query=query)
     
     def _extract_age(self,query:str)->Optional[int]:
@@ -167,9 +217,106 @@ class Query_parser:
                         logging.info(f"Age is out of valid bounds:{age}")
             return None            
         except Exception as e:
-            logging.info(f"Error in extracting age: {str(e)}")
+            logging.error(f"Error in extracting age: {str(e)}")
             return None
+    
+
+    def _fuzzy_match(self, text: str, candidates: List[str], threshold: float = 80.0) -> Optional[str]:
+        # rapidfuzz uses 0-100 scale, not 0.0-1.0
         
+        # process.extractOne returns (match, score, index)
+        result = process.extractOne(text, candidates, scorer=fuzz.ratio)
+        
+        if result:
+            match, score, index = result
+            if score >= threshold:
+                logging.info(f"Fuzzy matched '{text}' to '{match}' with score {score}")
+                return match
+                
+        return None
+        
+    def _extract_location_fuzzy(self,query_lower:str)->Optional[str]:
+        """
+            Extract location with fuzzy matching support.
+        
+            Handles typos and variations:
+            - "Pume" → "Pune"
+            - "Mumbay" → "Mumbai"
+            - "Bangalor" → "Bangalore"
+        """
+        try:
+            match = re.search(self.known_locations, query_lower, re.IGNORECASE)
+            if match:
+                location = match.group(1).title()
+                logging.info(f"Extracted location (exact): {location}")
+                return location
+            
+            # If no exact match, try fuzzy matching on individual words
+            words = query_lower.split()
+            for word in words:
+                if len(word) >= 4:  # Only try fuzzy match on words 4+ chars
+                    fuzzy_match = self._fuzzy_match(word, tuple(self.known_locations), threshold=0.75)
+                    if fuzzy_match:
+                        location = fuzzy_match.title()
+                        logging.info(f"Extracted location (fuzzy): {location}")
+                        return location
+            
+            return None
+            
+        except Exception as e:
+            logging.error(f"Error extracting location with fuzzy match: {str(e)}")
+            return None
+                    
+    def _extract_procedure_fuzzy(self, query_lower: str) -> Optional[str]:
+        """
+        Extract procedure with fuzzy matching.
+        
+        Handles variations like:
+        - "nee surgery" → "knee surgery"
+        - "hart surgery" → "heart surgery"
+        """                
+        try:
+            # First try exact match (from original method)
+            for canonical_name, variants in self.known_procedures.items():
+                for variant in variants:
+                    if variant in query_lower:
+                        logging.info(f"Extracted procedure (exact): {canonical_name}")
+                        return canonical_name
+            
+            # Try fuzzy matching on procedure variants
+            all_procedures = []
+            procedure_map = {}
+            for canonical_name, variants in self.known_procedures.items():
+                for variant in variants:
+                    all_procedures.append(variant)
+                    procedure_map[variant] = canonical_name
+            
+            # Check words in query
+            words = query_lower.split()
+            for i in range(len(words)):
+                # Try bigrams (two words) first
+                if i < len(words) - 1:
+                    bigram = f"{words[i]} {words[i+1]}"
+                    fuzzy_match = self._fuzzy_match(bigram, all_procedures, threshold=0.8)
+                    if fuzzy_match:
+                        procedure = procedure_map[fuzzy_match]
+                        logging.info(f"Extracted procedure (fuzzy bigram): {procedure}")
+                        return procedure
+                
+                # Try single words
+                if len(words[i]) >= 4:
+                    fuzzy_match = self._fuzzy_match(words[i], all_procedures, threshold=0.8)
+                    if fuzzy_match:
+                        procedure = procedure_map[fuzzy_match]
+                        logging.info(f"Extracted procedure (fuzzy): {procedure}")
+                        return procedure
+            
+            return None
+            
+        except Exception as e:
+            logging.error(f"Error extracting procedure with fuzzy match: {str(e)}")
+            return None                
+            
     def _extract_gender(self,query_lower:str)->Optional[str]:
         """
             Extract the gender from the query
@@ -182,7 +329,7 @@ class Query_parser:
                     return gender
             return None
         except Exception as e:
-            logging.info(f"Error in extracting Gender:{str(e)}")
+            logging.error(f"Error in extracting Gender:{str(e)}")
             return None    
         
     def _extract_location(self,query:str)->Optional[str]:
@@ -196,7 +343,7 @@ class Query_parser:
                     logging.info(f"Extracted location is:{location}")
                     return location.group(0).title()
         except Exception as e:
-            logging.info(f'Error in extracting location:{str(e)}')
+            logging.error(f'Error in extracting location:{str(e)}')
             
     def _extract_procedure(self,query_lower:str)->Optional[str]:
         """
@@ -210,7 +357,7 @@ class Query_parser:
             for canonical_name, variants in self.known_procedures.items():
                 for variant in variants:
                     if variant in query_lower:
-                        logging.debug(f"Extracted procedure: {canonical_name}")
+                        logging.info(f"Extracted procedure: {canonical_name}")
                         return canonical_name
             
             # If no known procedure found, try to extract any surgery-related term
@@ -218,7 +365,7 @@ class Query_parser:
             match = re.search(surgery_pattern, query_lower)
             if match:
                 procedure = match.group(1).strip()
-                logging.debug(f"Extracted unknown procedure: {procedure}")
+                logging.info(f"Extracted unknown procedure: {procedure}")
                 return procedure
                 
             return None
@@ -235,13 +382,13 @@ class Query_parser:
                 if match:
                     duration = int(match.group(1))
                     if 0 <= duration <= 120:
-                            logging.debug(f"Extracted policy duration: {duration} months")
+                            logging.info(f"Extracted policy duration: {duration} months")
                             return duration
                     else:
                         logging.warning(f"Policy duration {duration} seems invalid")
                 return None
         except Exception as e:
-            logging.info(f"Error in extracting duration")
+            logging.error(f"Error in extracting duration")
             return None    
                     
                     
@@ -253,7 +400,7 @@ class Query_parser:
                     return True
             return False    
         except Exception as e:
-            logging.info("No emergency keywords found")
+            logging.error("No emergency keywords found")
             return False                          
         
     def validate_parsed_query(self,parsed_query:ParseQuery)->Dict[str,bool]:
@@ -282,7 +429,7 @@ class Query_parser:
             logging.info(f"Validation results: {validations}")
             return validations
         except Exception as e:
-            logging.info(F"Error validating parsed query: {str(e)}")
+            logging.error(F"Error validating parsed query: {str(e)}")
             return CustomException(sys,e)
         
         
