@@ -1,0 +1,50 @@
+[
+  {
+    "test": "approved_case",
+    "decision": {
+      "approved": false,
+      "amount": null,
+      "reasoning": "The policyholder's age (46) is within the eligible range (18-50), but the policy duration is less than 3 months, which is a requirement for elective surgeries like knee surgery. Additionally, the treatment location (Pune) is a Tier 1 city, but the policy does not explicitly state the coverage percentage for Tier 1 cities. However, since the policy duration is insufficient, this is the primary reason for rejection.",
+      "relevant_clauses": [
+        "AGE ELIGIBILITY",
+        "SURGICAL COVERAGE AND BENEFITS",
+        "GEOGRAPHIC COVERAGE"
+      ],
+      "confidence": "medium",
+      "risk_factors": [
+        "Insufficient policy duration for elective surgery",
+        "Missing information on coverage percentage for Tier 1 cities"
+      ]
+    }
+  },
+  {
+    "test": "rejection_case",
+    "decision": {
+      "approved": false,
+      "amount": null,
+      "reasoning": "The claim is rejected due to insufficient policy duration. The policy duration is 1 month, which is less than the typical 2+ months required for elective surgeries. Reference: [SURGICAL COVERAGE AND BENEFITS] and [AGE ELIGIBILITY].",
+      "relevant_clauses": [
+        "SURGICAL COVERAGE AND BENEFITS",
+        "AGE ELIGIBILITY"
+      ],
+      "confidence": "low",
+      "risk_factors": [
+        "Insufficient policy duration",
+        "Age eligibility not explicitly checked due to insufficient information"
+      ]
+    }
+  },
+  {
+    "test": "emergency_case",
+    "decision": {
+      "approved": true,
+      "amount": null,
+      "reasoning": "The claim is approved as the patient is within the age eligibility range (18-50), the emergency procedure is covered immediately with zero waiting period, the treatment location is a Tier 1 city (Delhi), and the procedure is covered at 90% of actual costs. [AGE ELIGIBILITY], [SURGICAL COVERAGE AND BENEFITS], [GEOGRAPHIC COVERAGE]",
+      "relevant_clauses": [],
+      "confidence": "low",
+      "risk_factors": [
+        "Fallback parsing used"
+      ]
+    }
+  }
+]
