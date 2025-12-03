@@ -1,0 +1,51 @@
+{
+  "query": "50M hernia repair Hyderabad 5 month policy",
+  "parsed_query": {
+    "age": 50,
+    "gender": "male",
+    "procedure": "hernia",
+    "location": "Hyderabad",
+    "policy_duration_months": 50,
+    "is_emergency": false
+  },
+  "validation": {
+    "is_complete": true,
+    "missing_fields": []
+  },
+  "retrieved_clauses": [
+    {
+      "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+      "section": "SURGICAL COVERAGE AND BENEFITS",
+      "similarity": -0.1963566541671753,
+      "chunk_id": "chunk_4"
+    },
+    {
+      "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+      "section": "SURGICAL COVERAGE AND BENEFITS",
+      "similarity": -0.257989764213562,
+      "chunk_id": "chunk_3"
+    },
+    {
+      "text": "1.2 IMMEDIATE COVERAGE\nThe following are covered immediately from policy start date with zero \nwaiting period:\n- Accidental injuries and emergency procedures\n- Ambulance services\n- ICU admissions due to accidents\n- Emergency room visits\n\n1.3 SPECIFIC WAITING PERIODS\n- Maternity coverage: 12 months waiting period\n- Cataract surgery: 24 months waiting period\n- Joint replacement (non-accident): 24 months waiting period",
+      "section": "WAITING PERIODS AND IMMEDIATE COVERAGE",
+      "similarity": -0.2740020751953125,
+      "chunk_id": "chunk_2"
+    }
+  ],
+  "decision": {
+    "approved": false,
+    "amount": null,
+    "reasoning": "The claim is rejected due to insufficient policy duration for elective surgeries. According to Section 2.1, elective surgeries require a minimum of 2 months policy duration, but the policy duration is only 50 months, which is not sufficient. Additionally, the procedure is not explicitly listed in the policy sections provided, which is a concern.",
+    "relevant_clauses": [
+      "2.1 ORTHOPEDIC PROCEDURES",
+      "WAITING PERIODS AND IMMEDIATE COVERAGE"
+    ],
+    "confidence": "low",
+    "risk_factors": [
+      "Insufficient policy duration for elective surgeries",
+      "Procedure not explicitly listed in policy sections"
+    ]
+  },
+  "processing_time_seconds": 8.176709651947021,
+  "timestamp": "2025-12-04 03:06:45"
+}

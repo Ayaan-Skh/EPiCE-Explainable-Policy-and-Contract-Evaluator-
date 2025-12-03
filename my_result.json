@@ -1,0 +1,49 @@
+{
+  "query": "35F hip surgery Mumbai 6 months",
+  "parsed_query": {
+    "age": 35,
+    "gender": "female",
+    "procedure": "hip replacement",
+    "location": "Mumbai",
+    "policy_duration_months": 6,
+    "is_emergency": false
+  },
+  "validation": {
+    "is_complete": true,
+    "missing_fields": []
+  },
+  "retrieved_clauses": [
+    {
+      "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+      "section": "SURGICAL COVERAGE AND BENEFITS",
+      "similarity": 0.006860971450805664,
+      "chunk_id": "chunk_4"
+    },
+    {
+      "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+      "section": "SURGICAL COVERAGE AND BENEFITS",
+      "similarity": -0.17163777351379395,
+      "chunk_id": "chunk_3"
+    },
+    {
+      "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+      "section": "AGE",
+      "similarity": -0.19365406036376953,
+      "chunk_id": "chunk_8"
+    }
+  ],
+  "decision": {
+    "approved": false,
+    "amount": null,
+    "reasoning": "Claim rejected due to insufficient policy duration for elective surgery. Policy duration is 6 months, but elective surgeries require a minimum of 2 months policy duration (Section 2.1 ORTHOPEDIC PROCEDURES).",
+    "relevant_clauses": [
+      "2.1 ORTHOPEDIC PROCEDURES"
+    ],
+    "confidence": "high",
+    "risk_factors": [
+      "Policy duration is 6 months, which is less than the required 2 months for elective surgeries"
+    ]
+  },
+  "processing_time_seconds": 1.0821096897125244,
+  "timestamp": "2025-12-04 03:13:49"
+}

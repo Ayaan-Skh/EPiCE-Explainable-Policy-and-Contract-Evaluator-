@@ -42,38 +42,40 @@ class EmbeddingsManager:
             logging.error(f"Error initializing EmbeddingManager: {str(e)}")
             raise CustomException(sys,e)    
         
-    def create_collection(self,
-                          collection_name:str="policy_documents",
-                          reset:bool=False
-                          )->chromadb.Collection:
+    def create_collection(
+        self, 
+        collection_name: str = "policy_documents",
+        reset: bool = False
+    ) -> chromadb.Collection:
         """
-            Create or get existing collection.
-            
-            Args:
-                collection_name: Name of the collection
-                reset: If True, delete existing collection and create new one
-            
-            Returns:
-                ChromaDB collection object
+        Create or get existing collection.
+        
+        Args:
+            collection_name: Name of the collection
+            reset: If True, delete existing collection and create new one
+        
+        Returns:
+            ChromaDB collection object
         """
-
         try:
+            # Reset collection if requested
             if reset:
                 try:
                     self.client.delete_collection(collection_name)
                     logging.info(f"Deleted existing collection: {collection_name}")
-                except Exception as e:
-                    raise CustomException(sys,e)
+                except Exception:  # ← Changed: Don't capture 'e' here
+                    pass  # Collection doesn't exist, that's fine
             
+            # Try to get existing collection
             try:
-                self.collection=self.client.get_collection(
+                self.collection = self.client.get_collection(
                     name=collection_name,
-                    embedding_function=None
+                    embedding_function=None  # We'll provide embeddings manually
                 )
                 logging.info(f"✅ Loaded existing collection: {collection_name}")
-                logging.info(f"Collection has {self.collection.count()} documents")
+                logging.info(f"   Collection has {self.collection.count()} documents")
                 
-            except Exception:
+            except Exception:  # ← Changed: Don't capture 'e' here either
                 # Collection doesn't exist, create it
                 self.collection = self.client.create_collection(
                     name=collection_name,
@@ -83,10 +85,10 @@ class EmbeddingsManager:
                 logging.info(f"✅ Created new collection: {collection_name}")
             
             return self.collection
-                    
-        except:
-            logging.error(f"Error creating collection:{str(e)}")
-            raise CustomException(sys,e)
+            
+        except Exception as e:  # ← Only capture 'e' in the outer try-except
+            logging.error(f"Error creating collection: {str(e)}")
+            raise CustomException(sys, e)
             
     def generate_embeddings(self,text:List[str])->List[List[float]]:
         try:

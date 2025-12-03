@@ -100,7 +100,7 @@ class DecisionEngine:
         
         
         
-    def make_decision(self,query_info:Dict,retrived_docs:List[str],retrived_metadata:Optional[List[Dict]])->Decision:
+    def make_decision(self,query_info:Dict,retrieved_docs:List[str],retrieved_metadata:Optional[List[Dict]])->Decision:
         """
             Make insurance claim decision using LLM.
             
@@ -114,7 +114,7 @@ class DecisionEngine:
         """    
         try:
             logging.info("Making decision using LLM")
-            prompt=self._build_prompt(query_info,retrived_docs,retrived_metadata)
+            prompt=self._build_prompt(query_info,retrieved_docs,retrieved_metadata)
             logging.info(f"Prompt built for LLM:{prompt[:500]}")
 
             response_text=self._call_llm(prompt)
@@ -137,8 +137,8 @@ class DecisionEngine:
             )
     def _build_prompt(self, 
         query_info: Dict, 
-        docs: List[str],
-        metadata: Optional[List[Dict]] = None)->str:
+        retrieved_docs: List[str],
+        retrieved_metadata: Optional[List[Dict]] = None)->str:
         """
             Build comprehensive prompts for LLM
             
@@ -159,10 +159,10 @@ class DecisionEngine:
         is_emergency = query_info.get('is_emergency', False)
         
         formatted_clauses=[]
-        for i, doc in enumerate(docs):
+        for i, doc in enumerate(retrieved_docs):
             section = "unknown Section"
-            if metadata and i < len(metadata):
-                section = metadata[i].get("section","Unknown Section")
+            if retrieved_metadata and i < len(retrieved_metadata):
+                section = retrieved_metadata[i].get("section","Unknown Section")
             formatted_clauses.append(f"[{section}] \n {doc}")
         clauses_text="\n\n".join(formatted_clauses)
         

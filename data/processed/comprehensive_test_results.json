@@ -1,0 +1,578 @@
+{
+  "test_cases": {
+    "case_1_standard_approved": {
+      "query": "46 year old male, knee surgery in Pune, 3 month policy",
+      "parsed_query": {
+        "age": 46,
+        "gender": "male",
+        "procedure": "knee surgery",
+        "location": "Pune",
+        "policy_duration_months": 3,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.006236672401428223,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.02935624122619629,
+          "chunk_id": "chunk_3"
+        },
+        {
+          "text": "4.1 STANDARD ELIGIBILITY (Ages 18-50)\nPolicyholders aged 18-50 years are eligible for all surgical procedures \nwithout additional screening. Standard premium rates apply.\n\n4.2 SENIOR ELIGIBILITY (Ages 51-65)\nPolicyholders aged 51-65 require:\n- Additional medical evaluation before policy issuance\n- 20% higher premium\n- Some exclusions may apply based on health screening",
+          "section": "AGE",
+          "similarity": -0.039667367935180664,
+          "chunk_id": "chunk_7"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The policy duration is 3 months, which is less than the required 6 months for elective procedures like knee surgery. Additionally, the patient's age (46) is within the standard eligibility range, but the emergency case status is 'No', which does not automatically waive the waiting period requirements.",
+        "relevant_clauses": [
+          "SURGICAL COVERAGE AND BENEFITS",
+          "AGE",
+          "SURGICAL COVERAGE AND BENEFITS"
+        ],
+        "confidence": "medium",
+        "risk_factors": [
+          "Insufficient policy duration for elective procedure",
+          "Missing information on emergency case status"
+        ]
+      },
+      "processing_time_seconds": 0.8109309673309326,
+      "timestamp": "2025-12-04 03:03:49"
+    },
+    "case_2_rejection": {
+      "query": "45M knee surgery Mumbai 1 month policy",
+      "parsed_query": {
+        "age": 45,
+        "gender": "male",
+        "procedure": "knee surgery",
+        "location": "Mumbai",
+        "policy_duration_months": 45,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.2016538381576538,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.035928428173065186,
+          "chunk_id": "chunk_3"
+        },
+        {
+          "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+          "section": "AGE",
+          "similarity": -0.014860749244689941,
+          "chunk_id": "chunk_8"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The claim is rejected due to insufficient policy duration for elective surgeries. According to Section 2.1 ORTHOPEDIC PROCEDURES, elective surgeries require a minimum of 2 months policy duration, but the policy duration is only 45 months, which is not sufficient. Additionally, the patient's age (45) is within the standard coverage range, and the procedure (knee surgery) is covered at 80% of actual hospital bills. However, the emergency case status is 'No', which means the waiting period requirements apply.",
+        "relevant_clauses": [
+          "2.1 ORTHOPEDIC PROCEDURES"
+        ],
+        "confidence": "medium",
+        "risk_factors": [
+          "Insufficient policy duration for elective surgeries",
+          "Missing information on emergency case status"
+        ]
+      },
+      "processing_time_seconds": 0.6370365619659424,
+      "timestamp": "2025-12-04 03:05:16"
+    },
+    "case_3_emergency": {
+      "query": "28M emergency cardiac surgery Delhi 1 month policy",
+      "parsed_query": {
+        "age": 28,
+        "gender": "male",
+        "procedure": "cardiac",
+        "location": "Delhi",
+        "policy_duration_months": 28,
+        "is_emergency": true
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.32501232624053955,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+          "section": "AGE",
+          "similarity": -0.010976672172546387,
+          "chunk_id": "chunk_8"
+        },
+        {
+          "text": "5.2 SUB-LIMITS\n- Room rent limit: \u20b95,000 per day (single AC room)\n- ICU charges: \u20b910,000 per day\n- Ambulance charges: \u20b92,000 per trip\n\n5.3 CO-PAYMENT REQUIREMENTS\nNo co-payment for ages 18-50 in network hospitals.\n10% co-payment for ages 51+.\n\n\nSECTION 6: EXCLUSIONS AND NON-COVERED ITEMS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+          "section": "CLAIM LIMITS AND FINANCIAL CAPS",
+          "similarity": -0.12408685684204102,
+          "chunk_id": "chunk_9"
+        }
+      ],
+      "decision": {
+        "approved": true,
+        "amount": 180000,
+        "reasoning": "The claim is approved as the patient is within the age eligibility (18-50), the policy duration is sufficient for emergency procedures, the procedure is covered, and the location is a Tier 1 city. The emergency case waiver allows immediate coverage, and the estimated claim amount is based on typical costs for cardiac angioplasty.",
+        "relevant_clauses": [
+          "SURGICAL COVERAGE AND BENEFITS",
+          "AGE",
+          "CLAIM LIMITS AND FINANCIAL CAPS",
+          "SUB-LIMITS"
+        ],
+        "confidence": "high",
+        "risk_factors": []
+      },
+      "processing_time_seconds": 0.8646409511566162,
+      "timestamp": "2025-12-04 03:05:25"
+    },
+    "case_4_typos": {
+      "query": "35F hip surgry Mumbay 6 month",
+      "parsed_query": {
+        "age": 35,
+        "gender": "female",
+        "procedure": "hip replacement",
+        "location": null,
+        "policy_duration_months": 6,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": false,
+        "missing_fields": [
+          "location"
+        ]
+      },
+      "retrieved_clauses": [
+        {
+          "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+          "section": "AGE",
+          "similarity": -0.2683926820755005,
+          "chunk_id": "chunk_8"
+        },
+        {
+          "text": "5.2 SUB-LIMITS\n- Room rent limit: \u20b95,000 per day (single AC room)\n- ICU charges: \u20b910,000 per day\n- Ambulance charges: \u20b92,000 per trip\n\n5.3 CO-PAYMENT REQUIREMENTS\nNo co-payment for ages 18-50 in network hospitals.\n10% co-payment for ages 51+.\n\n\nSECTION 6: EXCLUSIONS AND NON-COVERED ITEMS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+          "section": "CLAIM LIMITS AND FINANCIAL CAPS",
+          "similarity": -0.4132500886917114,
+          "chunk_id": "chunk_9"
+        },
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.4417719841003418,
+          "chunk_id": "chunk_4"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The claim is rejected due to insufficient policy duration. The policy duration is 6 months, but elective surgeries typically require a minimum policy duration of 6 months (Section 2.3). However, since the patient is 35 years old, she falls within the standard coverage age range (18-50). The hip replacement procedure is covered (Section 2.3), but the claim is rejected due to the insufficient policy duration.",
+        "relevant_clauses": [
+          "SURGICAL COVERAGE AND BENEFITS",
+          "CLAIM LIMITS AND FINANCIAL CAPS"
+        ],
+        "confidence": "medium",
+        "risk_factors": [
+          "Insufficient policy duration for elective surgeries"
+        ]
+      },
+      "processing_time_seconds": 0.7111732959747314,
+      "timestamp": "2025-12-04 03:05:42"
+    },
+    "case_5_age_boundary": {
+      "query": "55 year old male knee surgery Bangalore 6 month policy",
+      "parsed_query": {
+        "age": 55,
+        "gender": "male",
+        "procedure": "knee surgery",
+        "location": "Bangalore",
+        "policy_duration_months": 6,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.07733774185180664,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.03402400016784668,
+          "chunk_id": "chunk_3"
+        },
+        {
+          "text": "4.1 STANDARD ELIGIBILITY (Ages 18-50)\nPolicyholders aged 18-50 years are eligible for all surgical procedures \nwithout additional screening. Standard premium rates apply.\n\n4.2 SENIOR ELIGIBILITY (Ages 51-65)\nPolicyholders aged 51-65 require:\n- Additional medical evaluation before policy issuance\n- 20% higher premium\n- Some exclusions may apply based on health screening",
+          "section": "AGE",
+          "similarity": -0.019092321395874023,
+          "chunk_id": "chunk_7"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The policyholder is 55 years old, which falls outside the standard eligibility age range of 18-50. Additionally, the policy duration is 6 months, which meets the minimum requirement for elective surgeries. However, the policyholder's age requires additional medical evaluation and 20% higher premium, which may indicate exclusions or special conditions. Furthermore, the claim does not specify if it's an emergency case, which would waive waiting period requirements.",
+        "relevant_clauses": [
+          "AGE",
+          "SURGICAL COVERAGE AND BENEFITS"
+        ],
+        "confidence": "low",
+        "risk_factors": [
+          "Age outside standard eligibility range (18-50)",
+          "Potential exclusions or special conditions due to age",
+          "Insufficient information on emergency case status"
+        ]
+      },
+      "processing_time_seconds": 0.8102829456329346,
+      "timestamp": "2025-12-04 03:06:21"
+    }
+  },
+  "batch_results": [
+    {
+      "query": "46M knee surgery Pune 3 month policy",
+      "parsed_query": {
+        "age": 46,
+        "gender": "male",
+        "procedure": "knee surgery",
+        "location": "Pune",
+        "policy_duration_months": 46,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.05944395065307617,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.015078306198120117,
+          "chunk_id": "chunk_3"
+        },
+        {
+          "text": "4.1 STANDARD ELIGIBILITY (Ages 18-50)\nPolicyholders aged 18-50 years are eligible for all surgical procedures \nwithout additional screening. Standard premium rates apply.\n\n4.2 SENIOR ELIGIBILITY (Ages 51-65)\nPolicyholders aged 51-65 require:\n- Additional medical evaluation before policy issuance\n- 20% higher premium\n- Some exclusions may apply based on health screening",
+          "section": "AGE",
+          "similarity": -0.21616029739379883,
+          "chunk_id": "chunk_7"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The policyholder's age (46) is within the standard eligibility range (18-50), but the policy duration (46 months) is less than the minimum required for elective surgeries (2 months).",
+        "relevant_clauses": [
+          "AGE",
+          "SURGICAL COVERAGE AND BENEFITS",
+          "2.1 ORTHOPEDIC PROCEDURES"
+        ],
+        "confidence": "low",
+        "risk_factors": [
+          "Insufficient policy duration for elective surgeries"
+        ]
+      },
+      "processing_time_seconds": 0.8792195320129395,
+      "timestamp": "2025-12-04 03:06:34"
+    },
+    {
+      "query": "35F hip replacement Mumbai 8 month policy",
+      "parsed_query": {
+        "age": 35,
+        "gender": "female",
+        "procedure": "hip replacement",
+        "location": "Mumbai",
+        "policy_duration_months": 8,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.06036686897277832,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+          "section": "AGE",
+          "similarity": -0.06303489208221436,
+          "chunk_id": "chunk_8"
+        },
+        {
+          "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.09919297695159912,
+          "chunk_id": "chunk_3"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The claim is rejected due to insufficient policy duration for elective surgeries. According to Section 2.1, elective surgeries require a minimum policy duration of 2 months, but the policy duration is only 8 months. Additionally, the patient's age (35) is within the standard coverage range (18-50).",
+        "relevant_clauses": [
+          "SURGICAL COVERAGE AND BENEFITS",
+          "AGE"
+        ],
+        "confidence": "high",
+        "risk_factors": [
+          "Insufficient policy duration for elective surgeries"
+        ]
+      },
+      "processing_time_seconds": 0.6416616439819336,
+      "timestamp": "2025-12-04 03:06:35"
+    },
+    {
+      "query": "60M cardiac surgery Bangalore 1 month policy",
+      "parsed_query": {
+        "age": 60,
+        "gender": "male",
+        "procedure": "cardiac",
+        "location": "Bangalore",
+        "policy_duration_months": 60,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": 0.2414516806602478,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+          "section": "AGE",
+          "similarity": -0.15639746189117432,
+          "chunk_id": "chunk_8"
+        },
+        {
+          "text": "4.1 STANDARD ELIGIBILITY (Ages 18-50)\nPolicyholders aged 18-50 years are eligible for all surgical procedures \nwithout additional screening. Standard premium rates apply.\n\n4.2 SENIOR ELIGIBILITY (Ages 51-65)\nPolicyholders aged 51-65 require:\n- Additional medical evaluation before policy issuance\n- 20% higher premium\n- Some exclusions may apply based on health screening",
+          "section": "AGE",
+          "similarity": -0.20529437065124512,
+          "chunk_id": "chunk_7"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The policyholder is 60 years old, which is outside the standard eligibility age range of 18-50. Additionally, the policy duration is 60 months, which is more than the minimum required 6 months for elective procedures. However, the policyholder's age is a significant risk factor, and the claim is being rejected due to this.",
+        "relevant_clauses": [
+          "AGE",
+          "SURGICAL COVERAGE AND BENEFITS",
+          "SECTION 5: CLAIM LIMITS AND FINANCIAL CAPS"
+        ],
+        "confidence": "low",
+        "risk_factors": [
+          "Age outside standard eligibility range (18-50)",
+          "Policyholder is a senior citizen (65+ not applicable, but close to it)"
+        ]
+      },
+      "processing_time_seconds": 0.8944125175476074,
+      "timestamp": "2025-12-04 03:06:36"
+    },
+    {
+      "query": "28F emergency appendix surgery Delhi",
+      "parsed_query": {
+        "age": 28,
+        "gender": "female",
+        "procedure": "appendix",
+        "location": "Delhi",
+        "policy_duration_months": null,
+        "is_emergency": true
+      },
+      "validation": {
+        "is_complete": false,
+        "missing_fields": [
+          "policy_duration"
+        ]
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.32239294052124023,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+          "section": "AGE",
+          "similarity": -0.34855329990386963,
+          "chunk_id": "chunk_8"
+        },
+        {
+          "text": "SECTION 3: GEOGRAPHIC COVERAGE AND NETWORK HOSPITALS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n3.1 TIER 1 CITIES (100% Coverage)\nTreatment in network hospitals in the following cities covered at 100% \nof scheduled amounts:\n- Mumbai, Delhi, Bangalore, Pune, Hyderabad, Chennai\n\n3.2 TIER 2 CITIES (80% Coverage)\nTreatment in Ahmedabad, Jaipur, Lucknow, Kochi, Chandigarh covered at \n80% of scheduled amounts.",
+          "section": "GEOGRAPHIC COVERAGE AND NETWORK HOSPITALS",
+          "similarity": -0.36890149116516113,
+          "chunk_id": "chunk_5"
+        }
+      ],
+      "decision": {
+        "approved": true,
+        "amount": 100000,
+        "reasoning": "The claim is approved as it meets all the requirements. The patient is within the age eligibility range (18-50), the procedure is covered, and the treatment location is in a Tier 1 city. The emergency case waives the waiting period requirements. The estimated claim amount is based on typical costs mentioned in policy.",
+        "relevant_clauses": [
+          "SURGICAL COVERAGE AND BENEFITS",
+          "AGE",
+          "GEOGRAPHIC COVERAGE AND NETWORK HOSPITALS"
+        ],
+        "confidence": "high",
+        "risk_factors": []
+      },
+      "processing_time_seconds": 0.7122845649719238,
+      "timestamp": "2025-12-04 03:06:36"
+    },
+    {
+      "query": "42F cataract surgery Chennai 12 month policy",
+      "parsed_query": {
+        "age": 42,
+        "gender": "female",
+        "procedure": "cataract",
+        "location": "Chennai",
+        "policy_duration_months": 12,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+          "section": "AGE",
+          "similarity": -0.11827731132507324,
+          "chunk_id": "chunk_8"
+        },
+        {
+          "text": "1.2 IMMEDIATE COVERAGE\nThe following are covered immediately from policy start date with zero \nwaiting period:\n- Accidental injuries and emergency procedures\n- Ambulance services\n- ICU admissions due to accidents\n- Emergency room visits\n\n1.3 SPECIFIC WAITING PERIODS\n- Maternity coverage: 12 months waiting period\n- Cataract surgery: 24 months waiting period\n- Joint replacement (non-accident): 24 months waiting period",
+          "section": "WAITING PERIODS AND IMMEDIATE COVERAGE",
+          "similarity": -0.11998307704925537,
+          "chunk_id": "chunk_2"
+        },
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.15988647937774658,
+          "chunk_id": "chunk_4"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The claim is rejected due to insufficient policy duration for elective surgeries. According to Section 2.2, a minimum policy duration of 6 months is required for elective procedures. However, the policy duration is only 12 months, which is not sufficient.",
+        "relevant_clauses": [
+          "SURGICAL COVERAGE AND BENEFITS",
+          "WAITING PERIODS AND IMMEDIATE COVERAGE"
+        ],
+        "confidence": "high",
+        "risk_factors": [
+          "Insufficient policy duration for elective surgeries"
+        ]
+      },
+      "processing_time_seconds": 0.587529182434082,
+      "timestamp": "2025-12-04 03:06:37"
+    },
+    {
+      "query": "50M hernia repair Hyderabad 5 month policy",
+      "parsed_query": {
+        "age": 50,
+        "gender": "male",
+        "procedure": "hernia",
+        "location": "Hyderabad",
+        "policy_duration_months": 50,
+        "is_emergency": false
+      },
+      "validation": {
+        "is_complete": true,
+        "missing_fields": []
+      },
+      "retrieved_clauses": [
+        {
+          "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.1963566541671753,
+          "chunk_id": "chunk_4"
+        },
+        {
+          "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+          "section": "SURGICAL COVERAGE AND BENEFITS",
+          "similarity": -0.257989764213562,
+          "chunk_id": "chunk_3"
+        },
+        {
+          "text": "1.2 IMMEDIATE COVERAGE\nThe following are covered immediately from policy start date with zero \nwaiting period:\n- Accidental injuries and emergency procedures\n- Ambulance services\n- ICU admissions due to accidents\n- Emergency room visits\n\n1.3 SPECIFIC WAITING PERIODS\n- Maternity coverage: 12 months waiting period\n- Cataract surgery: 24 months waiting period\n- Joint replacement (non-accident): 24 months waiting period",
+          "section": "WAITING PERIODS AND IMMEDIATE COVERAGE",
+          "similarity": -0.2740020751953125,
+          "chunk_id": "chunk_2"
+        }
+      ],
+      "decision": {
+        "approved": false,
+        "amount": null,
+        "reasoning": "The claim is rejected due to insufficient policy duration for elective surgeries. According to Section 2.1, elective surgeries require a minimum of 2 months policy duration, but the policy duration is only 50 months, which is not sufficient. Additionally, the procedure is not explicitly listed in the policy sections provided, which is a concern.",
+        "relevant_clauses": [
+          "2.1 ORTHOPEDIC PROCEDURES",
+          "WAITING PERIODS AND IMMEDIATE COVERAGE"
+        ],
+        "confidence": "low",
+        "risk_factors": [
+          "Insufficient policy duration for elective surgeries",
+          "Procedure not explicitly listed in policy sections"
+        ]
+      },
+      "processing_time_seconds": 8.176709651947021,
+      "timestamp": "2025-12-04 03:06:45"
+    }
+  ],
+  "performance_metrics": {
+    "total_queries": 11,
+    "avg_processing_time": 1.429625619541515,
+    "throughput_qps": 0.6994838273258581,
+    "complete_parsing_rate": 0.8181818181818182,
+    "confidence_distribution": {
+      "medium": 3,
+      "high": 4,
+      "low": 4
+    }
+  }
+}
