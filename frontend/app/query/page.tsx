@@ -1,73 +1,80 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/src/components/ui/Button';
 import { Card } from '@/src/components/ui/Card';
 import { AnimatedBackground } from '@/src/components/landing/AnimatedBackground';
-import { ArrowLeft, Send, Loader2, Sparkles } from 'lucide-react';
+import { ArrowLeft, Send, Loader2, Sparkles, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { QueryInput } from '@/src/components/query/QueryInput';
 import { ResultCard } from '@/src/components/query/ResultCard';
 import { ClauseViewer } from '@/src/components/query/ClauseViewer';
+import { apiClient, QueryResponse } from '@/src/lib/api';
 
 export default function QueryPage() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<QueryResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [systemReady, setSystemReady] = useState(false);
+  const [checkingStatus, setCheckingStatus] = useState(true);
+
+  // Check system status on mount
+  useEffect(() => {
+    checkSystemStatus();
+  }, []);
+
+  const checkSystemStatus = async () => {
+    try {
+      const status = await apiClient.getStatus();
+      setSystemReady(status.is_setup);
+      setCheckingStatus(false);
+    } catch (err) {
+      console.error('Failed to check status:', err);
+      setError('Failed to connect to backend. Make sure the API server is running on port 8000.');
+      setCheckingStatus(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!query.trim()) return;
     
     setLoading(true);
+    setError(null);
     
-    // Simulate API call (replace with actual API later)
-    setTimeout(() => {
-      setResult({
+    try {
+      const response = await apiClient.processQuery({
         query: query,
-        parsed_query: {
-          age: 46,
-          gender: 'male',
-          procedure: 'knee surgery',
-          location: 'Pune',
-          policy_duration_months: 3,
-          is_emergency: false,
-        },
-        decision: {
-          approved: true,
-          amount: 150000,
-          reasoning: 'Claim approved based on age eligibility (46 years within 18-50 range), sufficient policy duration (3 months meets minimum requirement for elective surgery), covered procedure (knee surgery at 80% coverage), and Pune is a Tier 1 city with 100% network coverage.',
-          relevant_clauses: ['SECTION 2: SURGICAL COVERAGE', 'SECTION 3: GEOGRAPHIC COVERAGE', 'SECTION 4: AGE ELIGIBILITY'],
-          confidence: 'high',
-          risk_factors: [],
-        },
-        retrieved_clauses: [
-          {
-            text: 'Knee surgery, hip replacement, and spinal procedures are covered at 80% of actual hospital bills. Coverage begins after 3 months of active policy for accident-related cases.',
-            section: 'SURGICAL COVERAGE AND BENEFITS',
-            similarity: 0.92,
-          },
-          {
-            text: 'Treatment in network hospitals in Pune, Mumbai, Bangalore, and Delhi are covered at 100% of scheduled amounts.',
-            section: 'GEOGRAPHIC COVERAGE',
-            similarity: 0.88,
-          },
-          {
-            text: 'Policyholders aged 18-50 are eligible for all surgical procedures without additional screening.',
-            section: 'AGE ELIGIBILITY',
-            similarity: 0.85,
-          },
-        ],
-        processing_time_seconds: 2.34,
+        top_k: 3
       });
+      
+      setResult(response);
+    } catch (err: any) {
+      console.error('Query error:', err);
+      setError(err.message || 'Failed to process query');
+    } finally {
       setLoading(false);
-    }, 2000);
+    }
   };
 
   const handleReset = () => {
     setQuery('');
     setResult(null);
+    setError(null);
   };
+
+  if (checkingStatus) {
+    return (
+      <main className="min-h-screen bg-gradient-dark relative overflow-hidden flex items-center justify-center">
+        <AnimatedBackground />
+        <Card glass className="p-8 text-center">
+          <Loader2 className="w-12 h-12 text-cyber-cyan animate-spin mx-auto mb-4" />
+          <p className="text-white">Checking system status...</p>
+        </Card>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-dark relative overflow-hidden">
@@ -89,7 +96,12 @@ export default function QueryPage() {
           <span className="text-xl sm:text-2xl font-bold text-white">EPiCE</span>
         </div>
         
-        <div className="w-20"></div>
+        <div className="flex items-center gap-2">
+          <div className={`w-2 h-2 rounded-full ${systemReady ? 'bg-emerald-500' : 'bg-rose-500'} animate-pulse`}></div>
+          <span className="text-xs text-gray-400 hidden sm:block">
+            {systemReady ? 'Ready' : 'Not Setup'}
+          </span>
+        </div>
       </nav>
       
       {/* Main Content */}
@@ -107,6 +119,51 @@ export default function QueryPage() {
           </p>
         </motion.div>
         
+        {/* System Not Ready Warning */}
+        {!systemReady && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
+          >
+            <Card className="p-4 bg-yellow-500/10 border-yellow-500/30">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-yellow-500 font-semibold mb-1">System Not Setup</p>
+                  <p className="text-sm text-gray-300">
+                    Please upload a policy document first or run the setup command.
+                  </p>
+                  <Link href="/upload">
+                    <Button variant="outline" size="sm" className="mt-3">
+                      Upload Document
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+        
+        {/* Error Display */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6"
+          >
+            <Card className="p-4 bg-rose-500/10 border-rose-500/30">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-rose-500 font-semibold mb-1">Error</p>
+                  <p className="text-sm text-gray-300">{error}</p>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+        
         {/* Query Input */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -118,7 +175,7 @@ export default function QueryPage() {
             onChange={setQuery}
             onSubmit={handleSubmit}
             loading={loading}
-            disabled={loading}
+            disabled={loading || !systemReady}
           />
         </motion.div>
         
@@ -160,7 +217,7 @@ export default function QueryPage() {
         )}
         
         {/* Example Queries */}
-        {!result && !loading && (
+        {!result && !loading && systemReady && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

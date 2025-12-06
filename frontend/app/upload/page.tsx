@@ -7,6 +7,7 @@ import { AnimatedBackground } from '@/src/components/landing/AnimatedBackground'
 import { ArrowLeft, Upload, FileText, CheckCircle, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { apiClient } from '@/src/lib/api';
 
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -20,18 +21,22 @@ export default function UploadPage() {
     }
   };
 
-  const handleUpload = async () => {
-    if (!file) return;
-    
-    setUploading(true);
-    
-    // Simulate upload (replace with actual API)
-    setTimeout(() => {
-      setUploading(false);
-      setUploaded(true);
-    }, 2000);
-  };
-
+ const handleUpload = async () => {
+  if (!file) return;
+  
+  setUploading(true);
+  
+  try {
+    const response = await apiClient.uploadDocument();
+    console.log("Upload complete")
+    setUploading(false);
+    setUploaded(true);
+  } catch (err: any) {
+    console.error('Upload error:', err);
+    alert(`Upload failed: ${err.message}`);
+    setUploading(false);
+  }
+};
   return (
     <main className="min-h-screen bg-gradient-dark relative overflow-hidden">
       <AnimatedBackground />
@@ -46,7 +51,7 @@ export default function UploadPage() {
         </Link>
         
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br from-cyber-cyan to-cyber-blue flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-linear-to-br from-cyber-cyan to-cyber-blue flex items-center justify-center">
             <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
           </div>
           <span className="text-xl sm:text-2xl font-bold text-white">EPiCE</span>

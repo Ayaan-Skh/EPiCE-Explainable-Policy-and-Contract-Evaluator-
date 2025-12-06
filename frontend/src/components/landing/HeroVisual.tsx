@@ -46,7 +46,7 @@ export function HeroVisual() {
         
         {/* Icon 4 - Left */}
         <motion.div
-          className="absolute top-1/2 left-0 -translate-y-1/2 w-16 h-16 rounded-2xl bg-gradient-to-br from-cyber-teal to-emerald-500 flex items-center justify-center shadow-lg shadow-cyber-teal/50"
+          className="absolute top-1/2 left-0 -translate-y-1/2 w-16 h-16 rounded-2xl bg-linear-to-br from-cyber-teal to-emerald-500 flex items-center justify-center shadow-lg shadow-cyber-teal/50"
           whileHover={{ scale: 1.2, rotate: 360 }}
         >
           <Shield className="w-8 h-8 text-white" />
@@ -58,7 +58,7 @@ export function HeroVisual() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-        className="absolute w-24 h-24 rounded-3xl bg-gradient-to-br from-cyber-cyan via-cyber-blue to-purple-500 flex items-center justify-center shadow-2xl shadow-cyber-cyan/50"
+        className="absolute w-24 h-24 rounded-3xl bg-linear-to-br from-cyber-cyan via-cyber-blue to-purple-500 flex items-center justify-center shadow-2xl shadow-cyber-cyan/50"
       >
         <div className="text-4xl font-bold text-white">AI</div>
       </motion.div>
@@ -93,7 +93,7 @@ export function HeroVisual() {
           className="absolute w-2 h-2 rounded-full bg-cyber-cyan"
           style={{
             left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`, 
           }}
           animate={{
             y: [0, -30, 0],
