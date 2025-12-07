@@ -4,7 +4,7 @@
     "decision": {
       "approved": false,
       "amount": null,
-      "reasoning": "The policyholder's age (46) is within the eligible range (18-50), but the policy duration is less than 3 months, which is a requirement for elective surgeries like knee surgery. Additionally, the treatment location (Pune) is a Tier 1 city, but the policy does not explicitly state the coverage percentage for Tier 1 cities. However, since the policy duration is insufficient, this is the primary reason for rejection.",
+      "reasoning": "The policyholder's age (46) is within the eligible range (18-50), but the policy duration is less than 3 months, which is a requirement for elective surgeries. Additionally, the procedure (knee surgery) is covered, but the treatment location (Pune) is a Tier 1 city, which would typically result in 100% coverage, but the policy does not specify any additional requirements for Tier 1 cities.",
       "relevant_clauses": [
         "AGE ELIGIBILITY",
         "SURGICAL COVERAGE AND BENEFITS",
@@ -12,8 +12,8 @@
       ],
       "confidence": "medium",
       "risk_factors": [
-        "Insufficient policy duration for elective surgery",
-        "Missing information on coverage percentage for Tier 1 cities"
+        "Insufficient policy duration",
+        "Missing information on Tier 1 city coverage"
       ]
     }
   },
@@ -22,15 +22,14 @@
     "decision": {
       "approved": false,
       "amount": null,
-      "reasoning": "The claim is rejected due to insufficient policy duration. The policy duration is 1 month, which is less than the typical 2+ months required for elective surgeries. Reference: [SURGICAL COVERAGE AND BENEFITS] and [AGE ELIGIBILITY].",
+      "reasoning": "The claim is rejected due to insufficient policy duration. According to the policy, coverage begins after 3 months of active policy for accident-related cases, and the policy duration is only 1 month. [SURGICAL COVERAGE AND BENEFITS]",
       "relevant_clauses": [
-        "SURGICAL COVERAGE AND BENEFITS",
-        "AGE ELIGIBILITY"
+        "SURGICAL COVERAGE AND BENEFITS"
       ],
-      "confidence": "low",
+      "confidence": "high",
       "risk_factors": [
         "Insufficient policy duration",
-        "Age eligibility not explicitly checked due to insufficient information"
+        "Policy duration is only 1 month"
       ]
     }
   },
@@ -39,7 +38,7 @@
     "decision": {
       "approved": true,
       "amount": null,
-      "reasoning": "The claim is approved as the patient is within the age eligibility range (18-50), the emergency procedure is covered immediately with zero waiting period, the treatment location is a Tier 1 city (Delhi), and the procedure is covered at 90% of actual costs. [AGE ELIGIBILITY], [SURGICAL COVERAGE AND BENEFITS], [GEOGRAPHIC COVERAGE]",
+      "reasoning": "The claim is approved as it meets all the requirements. The patient is within the age eligibility range (18-50), the policy duration is sufficient for emergency procedures, the cardiac procedure is covered, and the treatment location is in a Tier 1 city (Delhi).",
       "relevant_clauses": [],
       "confidence": "low",
       "risk_factors": [

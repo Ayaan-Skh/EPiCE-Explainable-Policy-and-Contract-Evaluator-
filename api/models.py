@@ -20,7 +20,7 @@ class ParsedQueryInfo(BaseModel):
     gender:Optional[str]=None
     procedure:Optional[str]=None
     location:Optional[str]=None
-    policy_duration:Optional[int]=None
+    policy_duration_months:Optional[int]=None
     is_emegency:Optional[bool]=None
     
     
@@ -29,7 +29,7 @@ class DecisionInfo(BaseModel):
     approved:bool
     amount:Optional[int]
     reasoning:str
-    relevent_clauses:List[str]
+    relevant_clauses:List[str]
     confidence:str
     risk_factors:List[str]    
 
@@ -47,8 +47,8 @@ class QueryResponse(BaseModel):
     query:str
     parsed_query:ParsedQueryInfo
     decision:DecisionInfo
-    retrived_clauses:List[RetrivedClause]
-    processing_time:float
+    retrieved_clauses:List[RetrivedClause]
+    processing_time_seconds:float
     timestamp:str
     
 class StatusResponse(BaseModel):
@@ -59,7 +59,7 @@ class StatusResponse(BaseModel):
     total_documents:int
     llm_provider:str
     llm_model:str
-    supproted_locations_:int
+    supported_locations:int
     supported_procedures:int 
     
 class ErrorResponse(BaseModel):

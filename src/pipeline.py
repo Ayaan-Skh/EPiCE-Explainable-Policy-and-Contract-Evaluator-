@@ -370,8 +370,17 @@ class InsuranceQAPipeline:
                 "supported_procedures":len(self.query_parser.known_procedures)                
             }
         except Exception as e:
-            logging.error(f"Error occured in getting status: {str(e)}")
-            return {"error":str(e)}    
+            logging.error(f"Error occurred in get_status: {e}")
+            # Don't break the endpoint, just return defaults
+            return {
+                "is_setup": False,
+                "total_documents": 0,
+                "llm_provider": "unknown",
+                "llm_model": "unknown",
+                "Vector_storage":"unknown",
+                "supported_locations": 0,
+                "supported_procedures": 0,
+            }
               
                     
                 

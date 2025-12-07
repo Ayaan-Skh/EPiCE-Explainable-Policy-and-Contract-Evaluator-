@@ -79,7 +79,7 @@ export default function Home() {
             className="space-y-6 sm:space-y-8 order-2 lg:order-1"
           >
             <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan text-xs sm:text-sm font-semibold mb-4">
-              🚀 Next-Gen Insurance Processing
+              Next-Gen Insurance Processing
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">

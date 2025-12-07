@@ -57,12 +57,12 @@ async def get_status():
         
         return StatusResponse(
             success=True,
-            is_setup=status['is_setup'],
-            total_documents=status['total_documents'],
-            llm_provider=status['llm_provider'],
-            llm_model=status['llm_model'],
-            supported_locations=status['supported_locations'],
-            supported_procedures=status['supported_procedures']
+            is_setup=status.get("is_setup", False),
+            total_documents=status.get("total_documents", 0),
+            llm_provider=status.get("llm_provider", "unknown"),
+            llm_model=status.get("llm_model", "unknown"),
+            supported_locations=status.get("supported_locations", 0),
+            supported_procedures=status.get("supported_procedures", 0),
         )
     except Exception as e:
         logging.error(f"Error getting status: {str(e)}")
