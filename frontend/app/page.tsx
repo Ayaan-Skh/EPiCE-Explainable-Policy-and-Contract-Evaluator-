@@ -160,7 +160,8 @@ export default function Home() {
       
       {/* Footer */}
       <footer className="relative z-10 text-center py-6 sm:py-8 text-gray-500 text-xs sm:text-sm border-t border-white/10 mt-12 sm:mt-20">
-        <p>© 2024 EPiCE - Explainable Policy & Contract Evaluator</p>
+        <p>© 2025 EPiCE - Explainable Policy & Contract Evaluator</p>
+        <p>This project is done by Ayaan Shaikh so do mention if cloning the project</p>
       </footer>
     </main>
   );
