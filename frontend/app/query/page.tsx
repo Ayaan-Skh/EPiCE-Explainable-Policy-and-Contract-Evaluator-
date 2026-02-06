@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/src/components/ui/Button';
 import { Card } from '@/src/components/ui/Card';
 import { AnimatedBackground } from '@/src/components/landing/AnimatedBackground';
-import { ArrowLeft, Send, Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Sparkles, AlertCircle, History, FileDown, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { QueryInput } from '@/src/components/query/QueryInput';
 import { ResultCard } from '@/src/components/query/ResultCard';
 import { ClauseViewer } from '@/src/components/query/ClauseViewer';
-import { apiClient, QueryResponse } from '@/src/lib/api';
+import { apiClient, QueryResponse, HistoryEntry } from '@/src/lib/api';
 
 export default function QueryPage() {
   const [query, setQuery] = useState('');
@@ -19,11 +19,17 @@ export default function QueryPage() {
   const [error, setError] = useState<string | null>(null);
   const [systemReady, setSystemReady] = useState(false);
   const [checkingStatus, setCheckingStatus] = useState(true);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [exportingPdf, setExportingPdf] = useState(false);
 
-  // Check system status on mount
   useEffect(() => {
     checkSystemStatus();
   }, []);
+
+  const loadHistory = () => {
+    apiClient.getHistory(20, 0).then(setHistory).catch(() => setHistory([]));
+  };
 
   const checkSystemStatus = async () => {
     try {
@@ -39,22 +45,34 @@ export default function QueryPage() {
 
   const handleSubmit = async () => {
     if (!query.trim()) return;
-    
     setLoading(true);
     setError(null);
-    
     try {
-      const response = await apiClient.processQuery({
-        query: query,
-        top_k: 3
-      });
-      
+      const response = await apiClient.processQuery({ query: query.trim(), top_k: 3 });
       setResult(response);
-    } catch (err: any) {
-      console.error('Query error:', err);
-      setError(err.message || 'Failed to process query');
+      loadHistory();
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to process query');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleExportPdf = async () => {
+    if (!result) return;
+    setExportingPdf(true);
+    try {
+      const blob = await apiClient.exportPdf(result);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'epice-query-result.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Export failed');
+    } finally {
+      setExportingPdf(false);
     }
   };
 
@@ -97,12 +115,47 @@ export default function QueryPage() {
         </div>
         
         <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => { setHistoryOpen(!historyOpen); if (!historyOpen) loadHistory(); }}
+          >
+            <History className="w-4 h-4" />
+            History
+          </Button>
           <div className={`w-2 h-2 rounded-full ${systemReady ? 'bg-emerald-500' : 'bg-rose-500'} animate-pulse`}></div>
           <span className="text-xs text-gray-400 hidden sm:block">
             {systemReady ? 'Ready' : 'Not Setup'}
           </span>
         </div>
       </nav>
+
+      {/* Query History panel */}
+      {historyOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8"
+        >
+          <Card glass className="p-4 mb-4 max-h-48 overflow-y-auto">
+            <h3 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
+              <History className="w-4 h-4" /> Recent queries
+            </h3>
+            {history.length === 0 ? (
+              <p className="text-sm text-gray-500">No history yet.</p>
+            ) : (
+              <ul className="space-y-1 text-sm">
+                {history.map((h) => (
+                  <li key={h.id} className="flex items-center justify-between gap-2 text-gray-300">
+                    <span className="truncate flex-1">{h.query}</span>
+                    <span className="shrink-0 text-gray-500">{h.approved != null ? (h.approved ? '✓' : '✗') : '-'}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Card>
+        </motion.div>
+      )}
       
       {/* Main Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
@@ -206,9 +259,13 @@ export default function QueryPage() {
             
             {/* Clause Viewer */}
             <ClauseViewer clauses={result.retrieved_clauses} />
-            
-            {/* Reset Button */}
-            <div className="text-center">
+
+            {/* Export PDF & Reset */}
+            <div className="text-center flex flex-wrap justify-center gap-3">
+              <Button onClick={handleExportPdf} disabled={exportingPdf} variant="outline">
+                {exportingPdf ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileDown className="w-4 h-4" />}
+                Export to PDF
+              </Button>
               <Button onClick={handleReset} variant="outline">
                 Analyze Another Claim
               </Button>

@@ -338,7 +338,7 @@ class InsuranceQAPipeline:
                 output_file.parent.mkdir(parents=True,exist_ok=True)
                 
                 with open(output_file,'w') as f:
-                    json.dump(result,f,indent=2)
+                    json.dump(results,f,indent=2)
                 
                 logging.info(f"Results saved to {output_path}")
             

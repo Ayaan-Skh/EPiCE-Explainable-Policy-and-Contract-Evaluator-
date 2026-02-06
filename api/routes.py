@@ -1,13 +1,26 @@
+from typing import List
 from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi.responses import StreamingResponse
 from pathlib import Path
 from api.models import (
     QueryRequest, QueryResponse, StatusResponse, ErrorResponse,
-    ParsedQueryInfo, DecisionInfo, RetrivedClause
+    ParsedQueryInfo, DecisionInfo, RetrivedClause,
+    BatchQueryRequest, BatchQueryResponse,
+    HistoryEntry, AnalyticsResponse,
 )
 import shutil
+import time
+import io
 from src.pipeline import InsuranceQAPipeline
 from src.logger import logging
-import time
+from api.history_cache import (
+    get_cached_response,
+    set_cached_response,
+    append_to_history,
+    get_history,
+    get_analytics,
+)
+from api.pdf_export import build_pdf_bytes
 
 router = APIRouter()
 
@@ -61,8 +74,8 @@ async def get_status():
             success=True,
             is_setup=status.get("is_setup", False),
             total_documents=status.get("total_documents", 0),
-            llm_provider=status.get("llm_provider", "unknown"),
-            llm_model=status.get("llm_model", "unknown"),
+            llm_provider=status.get("llm_provider") or status.get("LLM_provider", "unknown"),
+            llm_model=status.get("llm_model") or status.get("LLM_model", "unknown"),
             supported_locations=status.get("supported_locations", 0),
             supported_procedures=status.get("supported_procedures", 0),
         )
@@ -140,51 +153,67 @@ async def upload_policy_file(file:UploadFile=File(...)):
 @router.post("/query", response_model=QueryResponse)
 async def process_query(request: QueryRequest):
     """
-    Process insurance claim query
-    
-    Args:
-        request: QueryRequest with query text and top_k
-    
-    Returns:
-        QueryResponse with decision and retrieved clauses
+    Process insurance claim query (with caching and history).
+    Core pipeline logic unchanged; cache and history are additive.
     """
     try:
+        # Check cache first (performance optimization)
+        cached = get_cached_response(request.query, request.top_k)
+        if cached is not None:
+            response = QueryResponse(
+                success=True,
+                query=cached['query'],
+                parsed_query=ParsedQueryInfo(**cached['parsed_query']),
+                decision=DecisionInfo(**cached['decision']),
+                retrieved_clauses=[RetrivedClause(**c) for c in cached['retrieved_clauses']],
+                processing_time_seconds=cached['processing_time_seconds'],
+                timestamp=cached['timestamp'],
+            )
+            append_to_history(request.query, request.top_k, cached, from_cache=True)
+            logging.info(f"✅ Query served from cache: {request.query[:50]}...")
+            return response
+
         pipeline = get_pipeline()
-        
-        # Check if system is setup
+
         if not pipeline.is_setup:
             raise HTTPException(
                 status_code=503,
                 detail="System not setup. Please upload a policy document first."
             )
-        
+
         logging.info(f"Processing query: {request.query}")
-        
-        # Process query through pipeline
+
         result = pipeline.process_query(
             query=request.query,
             top_k=request.top_k,
-            verbose=True
+            verbose=True,
         )
-        
-        # Convert to API response format
+
+        # Build response dict for cache and history
+        response_dict = {
+            "query": result["query"],
+            "parsed_query": result["parsed_query"],
+            "decision": result["decision"],
+            "retrieved_clauses": result["retrieved_clauses"],
+            "processing_time_seconds": result["processing_time_seconds"],
+            "timestamp": result["timestamp"],
+        }
+        set_cached_response(request.query, request.top_k, response_dict)
+        append_to_history(request.query, request.top_k, response_dict, from_cache=False)
+
         response = QueryResponse(
             success=True,
-            query=result['query'],
-            parsed_query=ParsedQueryInfo(**result['parsed_query']),
-            decision=DecisionInfo(**result['decision']),
-            retrieved_clauses=[
-                RetrivedClause(**clause)
-                for clause in result['retrieved_clauses']
-            ],
-            processing_time_seconds=result['processing_time_seconds'],
-            timestamp=result['timestamp']
+            query=result["query"],
+            parsed_query=ParsedQueryInfo(**result["parsed_query"]),
+            decision=DecisionInfo(**result["decision"]),
+            retrieved_clauses=[RetrivedClause(**c) for c in result["retrieved_clauses"]],
+            processing_time_seconds=result["processing_time_seconds"],
+            timestamp=result["timestamp"],
         )
-        
-        logging.info(f"✅ Query processed successfully: {'APPROVED' if response.decision.approved else 'REJECTED'}")
-        
+
+        logging.info(f"✅ Query processed: {'APPROVED' if response.decision.approved else 'REJECTED'}")
         return response
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -226,6 +255,79 @@ async def upload_document():
     except Exception as e:
         logging.error(f"Error uploading document: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error uploading document: {str(e)}")
+
+
+@router.post("/batch-query", response_model=BatchQueryResponse)
+async def batch_process_queries(request: BatchQueryRequest):
+    """Process multiple queries in batch. Uses existing pipeline batch_process."""
+    try:
+        pipeline = get_pipeline()
+        if not pipeline.is_setup:
+            raise HTTPException(
+                status_code=503,
+                detail="System not setup. Please upload a policy document first.",
+            )
+        start = time.time()
+        results = pipeline.batch_process(
+            queries=request.queries,
+            save_results=False,
+        )
+        total_time = time.time() - start
+        return BatchQueryResponse(
+            success=True,
+            total=len(results),
+            results=results,
+            total_time_seconds=round(total_time, 3),
+            avg_time_seconds=round(total_time / len(results), 3) if results else 0,
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error in batch query: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/history", response_model=List[HistoryEntry])
+async def get_query_history(limit: int = 50, offset: int = 0):
+    """Return recent query history (newest first)."""
+    try:
+        entries = get_history(limit=min(limit, 100), offset=offset)
+        return [HistoryEntry(**e) for e in entries]
+    except Exception as e:
+        logging.error(f"Error fetching history: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/analytics", response_model=AnalyticsResponse)
+async def get_analytics_dashboard():
+    """Return analytics computed from query history."""
+    try:
+        stats = get_analytics()
+        return AnalyticsResponse(**stats)
+    except Exception as e:
+        logging.error(f"Error fetching analytics: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/export-pdf")
+async def export_result_to_pdf(result: QueryResponse):
+    """Generate and return a PDF for the given query result."""
+    try:
+        result_dict = result.model_dump()
+        pdf_bytes = build_pdf_bytes(result_dict)
+        return StreamingResponse(
+            io.BytesIO(pdf_bytes),
+            media_type="application/pdf",
+            headers={"Content-Disposition": "attachment; filename=epice-query-result.pdf"},
+        )
+    except ImportError as e:
+        raise HTTPException(
+            status_code=501,
+            detail="PDF export requires reportlab. Install with: pip install reportlab",
+        )
+    except Exception as e:
+        logging.error(f"Error generating PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/test-llm")

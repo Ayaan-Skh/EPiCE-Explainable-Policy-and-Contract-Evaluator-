@@ -66,5 +66,39 @@ class ErrorResponse(BaseModel):
     """Error response model"""
     success:bool=False
     error:str
-    details:Optional[str]=None      
-    
+    details:Optional[str]=None
+
+
+class BatchQueryRequest(BaseModel):
+    """Request model for batch query endpoint"""
+    queries: List[str] = Field(..., min_length=1, max_length=50)
+    top_k: int = Field(3, ge=1, le=10)
+
+
+class BatchQueryResponse(BaseModel):
+    """Response model for batch query"""
+    success: bool
+    total: int
+    results: List[Dict]
+    total_time_seconds: float
+    avg_time_seconds: float
+
+
+class HistoryEntry(BaseModel):
+    id: str
+    query: str
+    top_k: int
+    timestamp: str
+    processing_time_seconds: Optional[float]
+    approved: Optional[bool]
+    from_cache: bool = False
+
+
+class AnalyticsResponse(BaseModel):
+    total_queries: int
+    approved_count: int
+    rejected_count: int
+    approval_rate: float
+    avg_processing_time_seconds: float
+    cache_hits: int
+    cache_size: int

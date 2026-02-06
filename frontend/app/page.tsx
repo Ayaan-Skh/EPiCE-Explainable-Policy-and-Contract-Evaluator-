@@ -33,8 +33,14 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="hidden sm:block"
+          className="hidden sm:flex items-center gap-2"
         >
+          <Link href="/analytics">
+            <Button variant="ghost" size="sm">Analytics</Button>
+          </Link>
+          <Link href="/batch">
+            <Button variant="ghost" size="sm">Batch</Button>
+          </Link>
           <Link href="/query">
             <Button variant="outline" size="sm">
               Try Demo
@@ -57,8 +63,14 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="sm:hidden absolute top-20 right-4 z-20 bg-cyber-gray/95 backdrop-blur-lg rounded-xl p-4 border border-cyber-cyan/30"
+          className="sm:hidden absolute top-20 right-4 z-20 bg-cyber-gray/95 backdrop-blur-lg rounded-xl p-4 border border-cyber-cyan/30 flex flex-col gap-2"
         >
+          <Link href="/analytics" onClick={() => setMobileMenuOpen(false)}>
+            <Button variant="ghost" size="sm" className="w-full">Analytics</Button>
+          </Link>
+          <Link href="/batch" onClick={() => setMobileMenuOpen(false)}>
+            <Button variant="ghost" size="sm" className="w-full">Batch</Button>
+          </Link>
           <Link href="/query" onClick={() => setMobileMenuOpen(false)}>
             <Button variant="outline" size="sm" className="w-full">
               Try Demo

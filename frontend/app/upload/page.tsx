@@ -76,7 +76,7 @@ export default function UploadPage() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/upload-file`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-file`, {
         method: 'POST',
         body: formData,
       });
