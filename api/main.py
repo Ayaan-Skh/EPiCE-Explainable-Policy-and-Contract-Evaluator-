@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI

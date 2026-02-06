@@ -244,8 +244,11 @@ export default function QueryPage() {
               ))}
             </div>
           </motion.div>
+          
         )}
+        
       </div>
+      
     </main>
   );
 }

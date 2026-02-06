@@ -1,0 +1,66 @@
+[
+  {
+    "id": "chunk_0",
+    "text": "Mohammad Ayaan Anis Ahmad Shaikh\nayaanskh23@gmail.com | +91 8600301247 | Github | LinkedIn\nSUMMARY:\nMachine Learning Engineer specializing in NLP systems, Reinforcement learning and production ML\ndeployment. Built RAG-based document intelligence systems and real-time inference pipelines using Python,\nPyTorch, and FastAPI. Strong foundation in vector databases, embedding models, and low-latency API design.\nPROJECTS:\nDeepTrade \u2013 Reinforcement Learning Trading Agent | PyTorch, OpenAI Gym, Streamlit",
+    "section": "General",
+    "chunk_index": 0,
+    "char_start": 0,
+    "char_end": 500
+  },
+  {
+    "id": "chunk_1",
+    "text": "GitHub\nBuilt Deep Q-Network agent achieving 3.49% returns on test data, outperforming buy-and-hold by 16.5\u00d7 and\nrandom baseline by 96% across 1,500+ trading days on Indian equity markets.\nImplemented Double DQN with experience replay (10K buffer) and target networks in PyTorch, using 13-\ndimensional state space (RSI, MACD, Bollinger Bands) to optimize trading policies\nResolved Q-value explosion and training instability through state normalization and gradient clipping; optimized",
+    "section": "General",
+    "chunk_index": 1,
+    "char_start": 501,
+    "char_end": 984
+  },
+  {
+    "id": "chunk_2",
+    "text": "agent from 96% passive to 30% active trading via reward tuning\nDeployed end-to-end pipeline with custom Gym environment, backtesting framework, and Streamlit dashboard;\nmaintained proper train/val/test splits (70/15/15) to prevent leakage\nInsurance Document Q&A System with RAG Architecture | Python, Next.js, ChromaDB\nGithub\nBuilt an end-to-end ML system using LLMs and semantic search to automate insurance claim decisions from\nnatural language queries.",
+    "section": "General",
+    "chunk_index": 2,
+    "char_start": 985,
+    "char_end": 1440
+  },
+  {
+    "id": "chunk_3",
+    "text": "natural language queries.\nImplemented document chunking (500-char chunks), sentence-BERT embeddings (384-dim), and ChromaDB\nvector search achieving 80%+ accuracy in entity extraction across 18 query formats.\nIntegrated OpenAI GPT-3.5 for intelligent decision-making with explainable clause-to-decision mapping.\nAI-Powered Mock Interview SaaS | Next.js, Supabase, Vapi SDK\nLive Demo | Github",
+    "section": "General",
+    "chunk_index": 3,
+    "char_start": 1440,
+    "char_end": 1830
+  },
+  {
+    "id": "chunk_4",
+    "text": "Live Demo | Github\nBuilt real-time voice-based AI platform simulating role-specific mock interviews with low-latency interaction\nEngineered contextual feedback system providing actionable insights to improve user communication skills\nDesigned analytics dashboard tracking interview sessions and performance metrics for continuous improvement\nEDUCATION:\nBachelor of Technology - Walchand Institute of Technology, Solapur | CGPA : 9.4 | Exp : 2027.",
+    "section": "General",
+    "chunk_index": 4,
+    "char_start": 1830,
+    "char_end": 2276
+  },
+  {
+    "id": "chunk_5",
+    "text": "Secondary(12th) - Walchand College of Arts and Science, Solapur.\nSKILLS:\nAI/ML: Scikit-learn, PyTorch, TensorFlow, Sentence-BERT, NumPy, Pandas, Matplotlib, Seaborn,\nReinforcement learning.\nProgramming: Python (Advanced), C++, Java, JavaScript, TypeScript.\nDatabases: MongoDB, PostgreSQL, ChromaDB.\nDeployment & Tools: Flask, WSGI, Docker, Git, GitHub.\nWeb Technologies: React.js, Next.js, Node.js, Express.js.\nMathematics: Statistics, Linear Algebra, Probability, Calculus\nACHIEVEMENTS:",
+    "section": "General",
+    "chunk_index": 5,
+    "char_start": 2276,
+    "char_end": 2763
+  },
+  {
+    "id": "chunk_6",
+    "text": "ACHIEVEMENTS:\nSolved 350+ DSA problems across platforms like LeetCode, Coding Ninjas, Code chef with a Top 5% global\nranking\nAchieved a rating of 732 on codeforces and a rating of 1041 on codechef.\nCodeChef, Codeforces, Leetcode\nCERTIFICATIONS:\nForage December 2025: British Airways Data Science Job Simulation\nUdemy: Complete Data Science, MAchine learning, DL, NLP Bootcamp by Krish Naik\nInfosys Springboard: Machine Learning Foundation Certificate, Introduction to Data Science, Python Foundation",
+    "section": "General",
+    "chunk_index": 6,
+    "char_start": 2763,
+    "char_end": 3262
+  },
+  {
+    "id": "chunk_7",
+    "text": "Certificate\nNPTEL: Soft Skills Development, Programming with Generative AI",
+    "section": "General",
+    "chunk_index": 7,
+    "char_start": 3262,
+    "char_end": 3336
+  }
+]

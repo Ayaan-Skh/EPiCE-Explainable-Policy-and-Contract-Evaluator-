@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
+from pathlib import Path
 from api.models import (
     QueryRequest, QueryResponse, StatusResponse, ErrorResponse,
     ParsedQueryInfo, DecisionInfo, RetrivedClause
 )
+import shutil
 from src.pipeline import InsuranceQAPipeline
 from src.logger import logging
 import time
@@ -67,6 +69,72 @@ async def get_status():
     except Exception as e:
         logging.error(f"Error getting status: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/upload-file")
+async def upload_policy_file(file:UploadFile=File(...)):
+    """
+    Upload policy document (PDF, DOCX, TXT)
+    
+    :param file: Description
+    :type file: UploadFile
+    """
+    try:
+        file_ext=Path(file.filename).suffix.lower()
+        allowed_ext=['.pdf','.doc','.docx','.txt']
+        
+        if file_ext not in allowed_ext:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid file format. Allower formats are:{",".join(allowed_ext)}"
+            )
+        # Validate file size (10MB limit)
+        max_size = 10 * 1024 * 1024  # 10MB in bytes
+        file.file.seek(0, 2)  # Seek to end
+        file_size = file.file.tell()
+        file.file.seek(0)  # Reset to start
+        
+        if file_size > max_size:
+            raise HTTPException(
+                status_code=400,
+                detail=f"File size should be less than 10 MB"
+            )
+        
+        # Save file
+        upload_dir=Path("data/raw/uploads")    
+        upload_dir.mkdir(exist_ok=True, parents=True)
+        
+        file_path=upload_dir/file.filename
+        
+        with open(file_path,"wb") as buffer:
+            shutil.copyfileobj(file.file,buffer)
+            
+        logging.info(f"file uploaded: {file.filename} ({file_size/1024}KB)")
+        
+        # Process document
+        pipeline=get_pipeline()    
+        logging.info("Processing uploaded document")
+        setup_result=pipeline.setup(
+            document_path=file_path,
+            reset=True,
+            save_chunks=True
+        )
+        
+        return {
+            "success": True,
+                "message": "Document uploaded and processed successfully",
+                "filename": file.filename,
+                "file_size_kb": round(file_size / 1024, 2),
+                "file_type": file_ext,
+                "total_chunks": setup_result['total_chunks'],
+                "total_documents_stored": setup_result['total_documents_stored'],
+                "setup_time_seconds": setup_result['setup_time_seconds'],
+                "statistics": setup_result['statistics']
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error uploading file: {str(e)}")    
+        raise HTTPException(status_code=500, detail=f"Error uploading file:{str(e)}")
 
 
 @router.post("/query", response_model=QueryResponse)
