@@ -1,3 +1,4 @@
+import os
 import sys
 sys.path.append("..")
 from contextlib import asynccontextmanager
@@ -7,6 +8,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.routes import router
 from src.logger import logging
 import uvicorn
+
+# CORS: allow Vercel (and other hosts) via env; default localhost for dev
+def _cors_origins():
+    raw = os.getenv("CORS_ORIGINS", "").strip()
+    if raw:
+        return [o.strip() for o in raw.split(",") if o.strip()]
+    return [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3000",
+    ]
 
 
 @asynccontextmanager
@@ -40,14 +52,10 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Configure CORS for Next.js frontend
+# Configure CORS (set CORS_ORIGINS for production, e.g. https://yourapp.vercel.app)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # Next.js dev server
-        "http://localhost:3001",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -68,10 +76,11 @@ async def root():
 
 
 if __name__ == "__main__":
+    port = int(os.getenv("PORT", "8000"))
     uvicorn.run(
         "api.main:app",
         host="0.0.0.0",
-        port=8000,
-        reload=True,
+        port=port,
+        reload=os.getenv("ENV", "development") == "development",
         log_level="info",
     )

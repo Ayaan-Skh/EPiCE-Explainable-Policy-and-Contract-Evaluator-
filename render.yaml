@@ -1,0 +1,19 @@
+# Render Blueprint: Backend only (use Vercel for frontend)
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: epice-api
+    runtime: python
+    region: oregon  # or singapore, frankfurt
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ENV
+        value: production
+      # Add in Render Dashboard: GROQ_API_KEY, LLM_PROVIDER, LLM_MODEL
+      # Add CORS_ORIGINS = https://your-frontend.vercel.app (no trailing slash)
