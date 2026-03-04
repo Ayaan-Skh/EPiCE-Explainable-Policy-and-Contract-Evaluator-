@@ -77,7 +77,7 @@ def process_query(args):
     if decision['risk_factors']:
         print(f"\n⚠️  Risk Factors:")
         for risk in decision['risk_factors']:
-            print(f"  • {risk}")
+            print(f"{risk}")
     
     print(f"\n⏱️  Processing Time: {result['processing_time_seconds']:.3f}s")
     

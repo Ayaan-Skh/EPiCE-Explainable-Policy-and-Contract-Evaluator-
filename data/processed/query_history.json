@@ -7,5 +7,41 @@
     "processing_time_seconds": 1.311392068862915,
     "approved": false,
     "from_cache": false
+  },
+  {
+    "id": "bd2926283d8a2d5f",
+    "query": "42F cataract surgery Chennai 12 month policy",
+    "top_k": 3,
+    "timestamp": "2026-03-01 02:14:08",
+    "processing_time_seconds": 0.8700621128082275,
+    "approved": false,
+    "from_cache": false
+  },
+  {
+    "id": "a730a63562bdde55",
+    "query": "35F hip replacement Mumbai 8 month policy",
+    "top_k": 3,
+    "timestamp": "2026-03-01 02:19:17",
+    "processing_time_seconds": 1.2900724411010742,
+    "approved": false,
+    "from_cache": false
+  },
+  {
+    "id": "6f78bb70f95c2286",
+    "query": "28M emergency cardiac surgery Delhi 1 month",
+    "top_k": 3,
+    "timestamp": "2026-03-01 02:19:32",
+    "processing_time_seconds": 0.9545154571533203,
+    "approved": true,
+    "from_cache": false
+  },
+  {
+    "id": "9585d1ddef1a3465",
+    "query": "42F cataract surgery Chennai 12 month policy",
+    "top_k": 3,
+    "timestamp": "2026-03-01 02:19:55",
+    "processing_time_seconds": 0.8723924160003662,
+    "approved": false,
+    "from_cache": false
   }
 ]

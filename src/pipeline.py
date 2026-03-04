@@ -73,7 +73,7 @@ class InsuranceQAPipeline:
             logging.info("STARTING PIPELINE SETUP")
             logging.info("="*80)
             
-            # Step 1: Load document
+            # Step 1: Load  
             logging.info("\n📄 Step 1: Loading document...")
             text = self.doc_processor.load_documents(document_path)
             logging.info(f"   ✓ Loaded {len(text)} characters")
@@ -295,10 +295,10 @@ class InsuranceQAPipeline:
                       output_path:str="data/processed/batch_results.json"):
         
         """
-        Process multiole queries in batch
+        Process multiple queries in batch
         Arge:
             queries:List of query string
-            save_results: If true save rsults to JSON
+            save_results: If true save reults to JSON
             output_path: Path to save results
             
         Returns:

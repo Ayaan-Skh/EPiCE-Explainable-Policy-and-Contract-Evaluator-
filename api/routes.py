@@ -96,9 +96,10 @@ async def upload_policy_file(file:UploadFile=File(...)):
         allowed_ext=['.pdf','.doc','.docx','.txt']
         
         if file_ext not in allowed_ext:
+            formats = ",".join(allowed_ext)
             raise HTTPException(
                 status_code=400,
-                detail=f"Invalid file format. Allower formats are:{",".join(allowed_ext)}"
+                detail=f"Invalid file format. Allowed formats are: {formats}"
             )
         # Validate file size (10MB limit)
         max_size = 10 * 1024 * 1024  # 10MB in bytes

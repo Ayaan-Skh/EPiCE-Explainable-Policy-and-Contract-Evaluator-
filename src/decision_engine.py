@@ -122,7 +122,7 @@ class DecisionEngine:
 
             decision=self._parse_llm_response(response_text)
             
-            logging.info(f"Decision made: {"🟢APPROVED" if decision.approved else "🔴REJECTED"}")
+            logging.info(f"Decision made: {'APPROVED' if decision.approved else 'REJECTED'}")
             logging.info(f"Confidence: {decision.confidence}")
             
             return decision
