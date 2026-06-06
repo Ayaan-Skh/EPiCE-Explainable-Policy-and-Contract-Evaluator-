@@ -1,74 +1,106 @@
 [
   {
     "id": "chunk_0",
-    "text": "Assignment No-3\nName :- Ayaan Shaikh\nRoll No. :- C-42\nClass :- T.Y . B.Tech.\nAim :- To implement Breadth First Search (BFS) and Depth First Search (DFS)\nalgorithms to solve a given state-space problem and compare their time and\nspace complexity empirically.\nProblem Statement\nImplement BFS and DFS to solve a given state-space problem (e.g., maze\nnavigation or 8-puzzle). Compare time and space complexity empirically.\nDescription",
+    "text": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n HEALTHGUARD INSURANCE POLICY DOCUMENT\n Policy Version 2.1\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nSECTION 1: WAITING PERIODS AND IMMEDIATE COVERAGE\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
     "section": "General",
     "chunk_index": 0,
     "char_start": 0,
-    "char_end": 430
+    "char_end": 287
   },
   {
     "id": "chunk_1",
-    "text": "Description\nUninformed search algorithms explore the state space without using any\ndomain-specific knowledge. Among these, Breadth First Search (BFS) and\nDepth First Search (DFS) are fundamental techniques used to traverse graphs\nand trees.\nIn this assignment, BFS and DFS are implemented to solve a maze navigation\nproblem, which represents a state-space search problem. The performance of\nboth algorithms is analyzed and compared based on time and space usage.\nState-Space Problem: Maze Navigation",
-    "section": "General",
+    "text": "1.1 STANDARD WAITING PERIOD\nAll policyholders must complete a mandatory 6-month waiting period \nbefore submitting claims for pre-existing medical conditions. Pre-existing \nconditions include any illness or injury diagnosed or treated within \n48 months prior to policy purchase.",
+    "section": "WAITING PERIODS AND IMMEDIATE COVERAGE",
     "chunk_index": 1,
-    "char_start": 430,
-    "char_end": 929
+    "char_start": 289,
+    "char_end": 566
   },
   {
     "id": "chunk_2",
-    "text": "State-Space Problem: Maze Navigation\nState Representation :-\n\u25cf Each state represents the current position (row, column) of the agent in\nthe maze.\nInitial State :-\n\u25cf Starting cell of the maze.\nGoal State :-\n\u25cf Destination cell of the maze.\nActions :-\n\u25cf Move Up, Down, Left, or Right (if not blocked).\nMaze Representation :-\n\u25cf 0 \u2192 Free cell\n\u25cf 1 \u2192 Obstacle\nMaze Structure\nmaze = [\n[0, 1, 0, 0, 0],\n[0, 1, 0, 1, 0],\n[0, 0, 0, 1, 0],\n[1, 1, 0, 0, 0],\n[0, 0, 0, 1, 0]\n]\nstart = (0, 0)\ngoal = (4, 4)",
-    "section": "General",
+    "text": "1.2 IMMEDIATE COVERAGE\nThe following are covered immediately from policy start date with zero \nwaiting period:\n- Accidental injuries and emergency procedures\n- Ambulance services\n- ICU admissions due to accidents\n- Emergency room visits\n\n1.3 SPECIFIC WAITING PERIODS\n- Maternity coverage: 12 months waiting period\n- Cataract surgery: 24 months waiting period\n- Joint replacement (non-accident): 24 months waiting period",
+    "section": "WAITING PERIODS AND IMMEDIATE COVERAGE",
     "chunk_index": 2,
-    "char_start": 929,
-    "char_end": 1420
+    "char_start": 568,
+    "char_end": 987
   },
   {
     "id": "chunk_3",
-    "text": "[0, 0, 0, 1, 0]\n]\nstart = (0, 0)\ngoal = (4, 4)\nAlgorithm 1: Breadth First Search (BFS)\nDescription :-\nBreadth First Search explores the state space level by level using a queue. It is\ncomplete and guarantees the shortest path in an unweighted graph.\nPython Implementation :-\nfromcollectionsimport deque\ndefbfs(maze,start,goal):\nqueue=deque([(start, [start])])\nvisited=set([start])\nnodes_expanded= 0\nwhilequeue:\n(x,y),path=queue.popleft()\nnodes_expanded += 1\nif(x,y)==goal:\nreturnpath,nodes_expanded",
-    "section": "General",
+    "text": "SECTION 2: SURGICAL COVERAGE AND BENEFITS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n2.1 ORTHOPEDIC PROCEDURES\nKnee surgery, hip replacement, and spinal procedures are covered at \n80% of actual hospital bills. Coverage eligibility:\n- Accident-related cases: Covered after 3 months of active policy\n- Elective surgeries: Require minimum 2 months policy duration\n- Emergency orthopedic surgery: Immediate coverage",
+    "section": "SURGICAL COVERAGE AND BENEFITS",
     "chunk_index": 3,
-    "char_start": 1420,
-    "char_end": 1918
+    "char_start": 989,
+    "char_end": 1416
   },
   {
     "id": "chunk_4",
-    "text": "if(x,y)==goal:\nreturnpath,nodes_expanded\nfordx,dyin[(-1,0),(1,0),(0,-1),(0,1)]:\nnx,ny=x+dx, y + dy\nif0<=nx<len(maze) and 0 <= ny < len(maze[0]):\nifmaze[nx][ny] == 0 and (nx, ny) not in visited:\nvisited.add((nx, ny))\nqueue.append(((nx, ny), path + [(nx, ny)]))\nreturnNone,nodes_expanded\nObservation (BFS) :-\n\u25cf BFS explores many nodes.\n\u25cf Requires more memory due to queue storage.\n\u25cf Always finds the shortest path.\nAlgorithm 2: Depth First Search (DFS)\nDescription :-",
-    "section": "General",
+    "text": "2.2 CARDIAC PROCEDURES\nAngioplasty, bypass surgery, and valve replacement covered at 90% of \nactual costs. Minimum policy duration: 6 months for elective procedures.\nEmergency cardiac procedures covered immediately.\n\n2.3 TYPICAL APPROVED AMOUNTS\nBased on network hospital rates:\n- Knee arthroscopy: \u20b980,000 - \u20b91,20,000\n- Knee replacement: \u20b91,50,000 - \u20b92,50,000\n- Hip replacement: \u20b92,00,000 - \u20b93,00,000\n- Cardiac angioplasty: \u20b91,50,000 - \u20b92,00,000",
+    "section": "SURGICAL COVERAGE AND BENEFITS",
     "chunk_index": 4,
-    "char_start": 1918,
-    "char_end": 2383
+    "char_start": 1418,
+    "char_end": 1864
   },
   {
     "id": "chunk_5",
-    "text": "Description :-\nDepth First Search explores as deep as possible along one path before\nbacktracking. It uses a stack or recursion and requires less memory than BFS.\nPython Implementation :-\ndefdfs(maze,start,goal):\nstack=[(start,[start])]\nvisited=set([start])\nnodes_expanded= 0\nwhilestack:\n(x,y),path=stack.pop()\nnodes_expanded += 1\nif(x,y)==goal:\nreturnpath,nodes_expanded\nfordx,dyin[(-1,0),(1,0),(0,-1),(0,1)]:\nnx,ny=x+dx, y + dy\nif0<=nx<len(maze) and 0 <= ny < len(maze[0]):",
-    "section": "General",
+    "text": "SECTION 3: GEOGRAPHIC COVERAGE AND NETWORK HOSPITALS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n3.1 TIER 1 CITIES (100% Coverage)\nTreatment in network hospitals in the following cities covered at 100% \nof scheduled amounts:\n- Mumbai, Delhi, Bangalore, Pune, Hyderabad, Chennai\n\n3.2 TIER 2 CITIES (80% Coverage)\nTreatment in Ahmedabad, Jaipur, Lucknow, Kochi, Chandigarh covered at \n80% of scheduled amounts.",
+    "section": "GEOGRAPHIC COVERAGE AND NETWORK HOSPITALS",
     "chunk_index": 5,
-    "char_start": 2383,
-    "char_end": 2858
+    "char_start": 1866,
+    "char_end": 2289
   },
   {
     "id": "chunk_6",
-    "text": "if0<=nx<len(maze) and 0 <= ny < len(maze[0]):\nifmaze[nx][ny] == 0 and (nx, ny) not in visited:\nvisited.add((nx, ny))\nstack.append(((nx, ny), path + [(nx, ny)]))\nreturnNone,nodes_expanded\nObservation (DFS) :-\n\u25cf DFS uses less memory.\n\u25cf May explore unnecessary deep paths.\n\u25cf Does not guarantee shortest path.\nEmpirical Performance Comparison :-\nbfs_path, bfs_nodes = bfs(maze, start, goal)\ndfs_path, dfs_nodes = dfs(maze, start, goal)\nprint(\"BFS Nodes Expanded:\", bfs_nodes)",
-    "section": "General",
+    "text": "3.3 OTHER LOCATIONS (70% Coverage)\nAll other cities and towns covered at 70% of scheduled amounts when \ntreated at empaneled hospitals.\n\n3.4 NON-NETWORK HOSPITALS\nTreatment at non-network hospitals covered at 60% of scheduled amounts \nwith prior approval required.\n\nSECTION 4: AGE-BASED ELIGIBILITY AND REQUIREMENTS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+    "section": "GEOGRAPHIC COVERAGE AND NETWORK HOSPITALS",
     "chunk_index": 6,
-    "char_start": 2858,
-    "char_end": 3329
+    "char_start": 2291,
+    "char_end": 2664
   },
   {
     "id": "chunk_7",
-    "text": "print(\"BFS Nodes Expanded:\", bfs_nodes)\nprint(\"DFS Nodes Expanded:\", dfs_nodes)\nPerformance Comparison Table :-\nCriteria BFS DFS\nData Structure Queue Stack\nNodes Higher Lower\nExpanded\nHigh Low\nMemory Usage\nCompleteness Yes No\nOptimal Yes No\nSolution\nExecution Slower Faster\nSpeed\nOutput Analysis :-\n\u25cf BFS expands more nodes but guarantees the shortest path.\n\u25cf DFS expands fewer nodes but may take a longer or sub-optimal route.\n\u25cf BFS consumes more memory, while DFS is space-efficient.\nConclusion",
-    "section": "General",
+    "text": "4.1 STANDARD ELIGIBILITY (Ages 18-50)\nPolicyholders aged 18-50 years are eligible for all surgical procedures \nwithout additional screening. Standard premium rates apply.\n\n4.2 SENIOR ELIGIBILITY (Ages 51-65)\nPolicyholders aged 51-65 require:\n- Additional medical evaluation before policy issuance\n- 20% higher premium\n- Some exclusions may apply based on health screening",
+    "section": "AGE",
     "chunk_index": 7,
-    "char_start": 3329,
-    "char_end": 3825
+    "char_start": 2666,
+    "char_end": 3037
   },
   {
     "id": "chunk_8",
-    "text": "Conclusion\nThis assignment successfully implements BFS and DFS algorithms to solve a\nmaze navigation problem. BFS is complete and optimal but requires more\nmemory. DFS is memory-efficient but does not guarantee the shortest path. The\nempirical comparison highlights the trade-off between time, space, and optimality\nin uninformed search algorithms.",
-    "section": "General",
+    "text": "4.3 SENIOR CITIZEN (Ages 65+)\nLimited coverage available:\n- Emergency procedures only\n- No elective surgeries\n- 50% higher premium\n- Maximum coverage capped at \u20b93,00,000 per year\n\nSECTION 5: CLAIM LIMITS AND FINANCIAL CAPS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\n5.1 ANNUAL LIMITS\n- Maximum total claims per policy year: \u20b95,00,000\n- Maximum per hospitalization: \u20b92,00,000\n- Maximum outpatient expenses: \u20b950,000 per year",
+    "section": "AGE",
     "chunk_index": 8,
-    "char_start": 3825,
-    "char_end": 4173
+    "char_start": 3039,
+    "char_end": 3477
+  },
+  {
+    "id": "chunk_9",
+    "text": "5.2 SUB-LIMITS\n- Room rent limit: \u20b95,000 per day (single AC room)\n- ICU charges: \u20b910,000 per day\n- Ambulance charges: \u20b92,000 per trip\n\n5.3 CO-PAYMENT REQUIREMENTS\nNo co-payment for ages 18-50 in network hospitals.\n10% co-payment for ages 51+.\n\nSECTION 6: EXCLUSIONS AND NON-COVERED ITEMS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+    "section": "CLAIM LIMITS AND FINANCIAL CAPS",
+    "chunk_index": 9,
+    "char_start": 3479,
+    "char_end": 3824
+  },
+  {
+    "id": "chunk_10",
+    "text": "The following are NOT covered under this policy:\n- Cosmetic or aesthetic procedures\n- Experimental or unproven treatments\n- Self-inflicted injuries\n- Injuries due to participation in hazardous sports\n- Treatment for drug or alcohol addiction\n- Dental procedures (unless accident-related)\n- Vision correction surgeries\n\nSECTION 7: CLAIM SUBMISSION REQUIREMENTS\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+    "section": "EXCLUSIONS AND NON",
+    "chunk_index": 10,
+    "char_start": 3826,
+    "char_end": 4243
+  },
+  {
+    "id": "chunk_11",
+    "text": "7.1 DOCUMENTATION REQUIRED\n- Original hospital bills and discharge summary\n- Doctor's prescription and treatment notes\n- Diagnostic test reports\n- Policy document copy\n- Government-issued ID proof\n- Bank account details for reimbursement\n\n7.2 SUBMISSION TIMELINE\nClaims must be submitted within 30 days of discharge.\nLate submission may result in 10% reduction in approved amount.",
+    "section": "CLAIM SUBMISSION REQUIREMENTS",
+    "chunk_index": 11,
+    "char_start": 4245,
+    "char_end": 4625
+  },
+  {
+    "id": "chunk_12",
+    "text": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n END OF POLICY DOCUMENT\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+    "section": "CLAIM SUBMISSION REQUIREMENTS",
+    "chunk_index": 12,
+    "char_start": 4627,
+    "char_end": 4770
   }
 ]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "b4944ea88ec57876",
+    "query": "46 year old male, knee surgery in Pune, 3 month policy",
+    "top_k": 3,
+    "timestamp": "2026-05-12 18:46:03",
+    "processing_time_seconds": 2.16313099861145,
+    "approved": false,
+    "from_cache": false
+  }
+]
