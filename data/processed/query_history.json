@@ -43,5 +43,23 @@
     "processing_time_seconds": 0.8723924160003662,
     "approved": false,
     "from_cache": false
+  },
+  {
+    "id": "d68962bf0a8a23b6",
+    "query": "28M emergency cardiac surgery Delhi 1 month",
+    "top_k": 3,
+    "timestamp": "2026-06-08 16:36:15",
+    "processing_time_seconds": 2.565613031387329,
+    "approved": true,
+    "from_cache": false
+  },
+  {
+    "id": "af4693f60546b744",
+    "query": "35F hip replacement Mumbai 8 month policy",
+    "top_k": 3,
+    "timestamp": "2026-06-08 16:40:47",
+    "processing_time_seconds": 0.9847555160522461,
+    "approved": false,
+    "from_cache": false
   }
 ]

@@ -33,13 +33,16 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        # Baked into the client bundle at build time. The browser must be able
+        # to reach this URL. Override for prod, e.g.:
+        #   NEXT_PUBLIC_API_URL=https://api.yourdomain.com/api docker compose build
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
     container_name: epice-frontend
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      # Browser must reach API by host; use localhost when app is at localhost:3000
-      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
     depends_on:
       api:
         condition: service_healthy

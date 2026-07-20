@@ -4,7 +4,7 @@ from fastapi.responses import StreamingResponse
 from pathlib import Path
 from api.models import (
     QueryRequest, QueryResponse, StatusResponse, ErrorResponse,
-    ParsedQueryInfo, DecisionInfo, RetrivedClause,
+    ParsedQueryInfo, DecisionInfo, RetrievedClause,
     BatchQueryRequest, BatchQueryResponse,
     HistoryEntry, AnalyticsResponse,
 )
@@ -166,7 +166,7 @@ async def process_query(request: QueryRequest):
                 query=cached['query'],
                 parsed_query=ParsedQueryInfo(**cached['parsed_query']),
                 decision=DecisionInfo(**cached['decision']),
-                retrieved_clauses=[RetrivedClause(**c) for c in cached['retrieved_clauses']],
+                retrieved_clauses=[RetrievedClause(**c) for c in cached['retrieved_clauses']],
                 processing_time_seconds=cached['processing_time_seconds'],
                 timestamp=cached['timestamp'],
             )
@@ -207,7 +207,7 @@ async def process_query(request: QueryRequest):
             query=result["query"],
             parsed_query=ParsedQueryInfo(**result["parsed_query"]),
             decision=DecisionInfo(**result["decision"]),
-            retrieved_clauses=[RetrivedClause(**c) for c in result["retrieved_clauses"]],
+            retrieved_clauses=[RetrievedClause(**c) for c in result["retrieved_clauses"]],
             processing_time_seconds=result["processing_time_seconds"],
             timestamp=result["timestamp"],
         )

@@ -269,6 +269,15 @@ class DocumentProcessor:
         
     def _clean_text(self, text: str) -> str:
         """Clean extracted text"""
+        # Remove decorative Unicode box-drawing characters (═ ─ │ ╔ ╗ ╚ ╝ ╠ ╣ ╦ ╩ etc.)
+        text = re.sub(r'[\u2500-\u257F]+', '', text)
+        
+        # Remove lines that are purely decorative dashes, equals, underscores, or asterisks
+        text = re.sub(r'^[\-=_*~]{3,}\s*$', '', text, flags=re.MULTILINE)
+        
+        # Remove "END OF POLICY DOCUMENT" boilerplate footer
+        text = re.sub(r'END OF POLICY DOCUMENT', '', text, flags=re.IGNORECASE)
+        
         # Remove excessive whitespace
         text = re.sub(r'\n{3,}', '\n\n', text)
         text = re.sub(r' {2,}', ' ', text)
@@ -286,7 +295,8 @@ class DocumentProcessor:
         try:
             # Fixed pattern - removed invalid regex syntax
             # This pattern captures from "SECTION X:" until next section or end
-            pattern = r'SECTION\s+(\d+):\s+([A-Z\s]+)\s*\n(.*?)(?=SECTION\s+\d+:|$)'
+            # Uses [A-Z \t\-] to handle hyphenated titles (spaces/tabs only, not newlines)
+            pattern = r'SECTION\s+(\d+):\s+([A-Z \t\-]+)\s*\n(.*?)(?=SECTION\s+\d+:|$)'
             matches = re.findall(pattern, text, re.DOTALL | re.IGNORECASE)
             
             sections = []
@@ -383,7 +393,8 @@ class DocumentProcessor:
         """
         try:
             # Find all section headers with their positions
-            pattern = r'SECTION\s+(\d+):\s+([A-Z\s]+)'
+            # Uses [A-Z \t\-] to handle hyphenated titles (spaces/tabs only, not newlines)
+            pattern = r'SECTION\s+(\d+):\s+([A-Z \t\-]+)'
             matches = re.finditer(pattern, full_text, re.IGNORECASE)
             
             # Store sections with their start positions

@@ -4,7 +4,7 @@ from typing import List,Dict,Optional
 class QueryRequest(BaseModel):
     """Request model for query endpoint"""
     query:str=Field(...,min_length=5,description="Natural language insurance query")
-    top_k:int=Field(..., ge=1,le=10,description="Number of clauses to retrive")
+    top_k:int=Field(..., ge=1,le=10,description="Number of clauses to retrieve")
     
     class Config:
         json_schema_extra={
@@ -21,7 +21,7 @@ class ParsedQueryInfo(BaseModel):
     procedure:Optional[str]=None
     location:Optional[str]=None
     policy_duration_months:Optional[int]=None
-    is_emegency:Optional[bool]=None
+    is_emergency:Optional[bool]=None
     
     
 class DecisionInfo(BaseModel):
@@ -33,8 +33,8 @@ class DecisionInfo(BaseModel):
     confidence:str
     risk_factors:List[str]    
 
-class RetrivedClause(BaseModel):
-    """Retrived policy model"""
+class RetrievedClause(BaseModel):
+    """Retrieved policy clause model"""
     text:str
     section:str
     similarity:float
@@ -47,7 +47,7 @@ class QueryResponse(BaseModel):
     query:str
     parsed_query:ParsedQueryInfo
     decision:DecisionInfo
-    retrieved_clauses:List[RetrivedClause]
+    retrieved_clauses:List[RetrievedClause]
     processing_time_seconds:float
     timestamp:str
     
