@@ -17,3 +17,13 @@ __pycache__
 dist
 build
 coverage
+
+# Backend image doesn't need these — keep the build context small
+frontend/
+notebooks/
+models/
+policy_documents/
+logs/
+data/processed/
+tests/
+my_result.json
