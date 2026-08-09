@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
 # Copy requirements and install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip setuptools wheel
+# CPU-only torch first, so sentence-transformers doesn't drag in the multi-GB
+# CUDA build (no GPU on Render) that OOMs the instance on import.
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
 
 
